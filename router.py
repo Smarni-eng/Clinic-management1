@@ -45,8 +45,6 @@ def handle_ui_routes(handler, path):
     return False
 
 
-
-
 # -------------------------------
 # MAIN ROUTER CLASS
 # -------------------------------
@@ -68,8 +66,6 @@ class ClinicRouter(BaseHTTPRequestHandler):
         # 1. UI routes first (SPA)
         if handle_ui_routes(self, path):
             return
-
-
 
         # 2. API READ routes
         if path == "/api/patients":
@@ -113,4 +109,4 @@ class ClinicRouter(BaseHTTPRequestHandler):
 
     def log_message(self, format, *args):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[{timestamp}] [Server] {format % args}")
+        print(f"[{timestamp}] [ClinicServer] {format % args}")

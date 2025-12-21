@@ -1,26 +1,25 @@
-# Handlers are responsible for dealing with HTTP details (headers, body, methods)
 import json
 from core.responses import send_json, send_404
 from core.request import parse_json_body
-from services.patient_service import (
+from services.doctor_service import (
     service_get_all
     , service_get_one
     , service_create
     , service_update
-    , service_delete
+    , service_delete   
 )
 
 # ---------------------------
-# GET all patients
+# GET all doctors
 # ---------------------------
-def get_all_patients(handler):
+def get_all_doctorts(handler):
     return send_json(handler, 200, service_get_all())
 
 
 # ---------------------------
-# GET one patient
+# GET one doctor
 # ---------------------------
-def get_patient(handler, patient_id):
+def get_doctor(handler, patient_id):
     patient = service_get_one(patient_id)
     return send_json(handler, 200, patient) if patient else send_404(handler)
 
