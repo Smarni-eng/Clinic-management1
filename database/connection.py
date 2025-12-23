@@ -33,26 +33,26 @@ def init_database():
             gender TEXT,
             phone TEXT,
             email TEXT,
-            specialization TEXT,
+            specialisation TEXT,
             experience INTEGER,
             created_at TEXT,
             updated_at TEXT
         )
     """)
-    # conn.execute("""
-    #     CREATE TABLE IF NOT EXISTS appointments (
-    #         id INTEGER PRIMARY KEY AUTOINCREMENT,
-    #         patient_id INTEGER,
-    #         doctor_id INTEGER,
-    #         appointment_date TEXT,
-    #         appointment_time TEXT,
-    #         status TEXT,
-    #         created_at TEXT,
-    #         updated_at TEXT,
-    #         FOREIGN KEY (patient_id) REFERENCES patients(id),
-    #         FOREIGN KEY (doctor_id) REFERENCES doctors(id)
-    #     )
-    # """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS appointments (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            patient_id INTEGER,
+            doctor_id INTEGER,
+            appointment_date TEXT,
+            appointment_time TEXT,
+            status TEXT,
+            created_at TEXT,
+            updated_at TEXT,
+            FOREIGN KEY (patient_id) REFERENCES patients(id),
+            FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+        )
+    """)
 
     conn.commit()
     conn.close()

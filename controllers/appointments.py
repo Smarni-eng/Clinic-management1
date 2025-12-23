@@ -1,7 +1,7 @@
 import json
 from core.responses import send_json, send_404
 from core.request import parse_json_body
-from services.doctor_service import (
+from services.appointment_service import (
     service_get_all
     , service_get_one
     , service_create
@@ -10,41 +10,41 @@ from services.doctor_service import (
 )
 
 # ---------------------------
-# GET all doctors
+# GET all appointments
 # ---------------------------
-def get_all_doctors(handler):
+def get_all_appointments(handler):
     return send_json(handler, 200, service_get_all())
 
 
 # ---------------------------
-# GET one doctor
+# GET one appointment
 # ---------------------------
-def get_doctor(handler, doctor_id):
-    patient = service_get_one(doctor_id)
-    return send_json(handler, 200, doctor) if doctor else send_404(handler)
+def get_appointment(handler, appointment_id):
+    appointment = service_get_one(appointment_id)
+    return send_json(handler, 200, appointment) if appointment else send_404(handler)
 
 
 # ---------------------------
-# CREATE doctor
+# CREATE appointment
 # ---------------------------
-def create_doctor(handler):
+def create_appointment(handler):
     data = parse_json_body(handler)
-    new_doctor = service_create(data)
-    return send_json(handler, 201, new_doctor)
+    new_appointment = service_create(data)
+    return send_json(handler, 201, new_appointment)
 
 
 # ---------------------------
-# UPDATE doctor
+# UPDATE appointment
 # ---------------------------
-def update_doctor(handler, doctor_id):
+def update_appointment(handler, appointment_id):
     data = parse_json_body(handler)
-    updated = service_update(doctor_id, data)
+    updated = service_update(appointment_id, data)
     return send_json(handler, 200, updated) if updated else send_404(handler)
 
 
 # ---------------------------
 # DELETE doctor
 # ---------------------------
-def delete_doctor(handler, doctor_id):
-    deleted = service_delete(doctor_id)
+def delete_appointment(handler, appointment_id):
+    deleted = service_delete(appointment_id)
     return send_json(handler, 200, {"deleted": True}) if deleted else send_404(handler)
