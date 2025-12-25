@@ -12,7 +12,6 @@ from controllers.patients import (
     delete_patient,
 )
 
-
 from controllers.doctors import (
     get_all_doctors,
     get_doctor,
@@ -20,7 +19,6 @@ from controllers.doctors import (
     update_doctor,
     delete_doctor,
 )
-
 
 from controllers.appointments import (
     get_all_appointments,
@@ -91,24 +89,33 @@ class ClinicRouter(BaseHTTPRequestHandler):
             return get_all_patients(self)
 
         if path.startswith("/api/patients/"):
-            patient_id = int(path.split("/")[-1])
-            return get_patient(self, patient_id)
+            try:
+                patient_id = int(path.split("/")[-1])
+                return get_patient(self, patient_id)
+            except ValueError:
+                return send_404(self)
 
-        #doctors
+        # doctors
         if path == "/api/doctors":
             return get_all_doctors(self)
 
         if path.startswith("/api/doctors/"):
-            doctor_id = int(path.split("/")[-1])
-            return get_doctor(self, doctor_id)
+            try:
+                doctor_id = int(path.split("/")[-1])
+                return get_doctor(self, doctor_id)
+            except ValueError:
+                return send_404(self)
 
-        #appointments
+        # appointments
         if path == "/api/appointments":
             return get_all_appointments(self)
 
         if path.startswith("/api/appointments/"):
-           appointment_id = int(path.split("/")[-1])
-           return get_appointment(self, appointment_id)
+            try:
+                appointment_id = int(path.split("/")[-1])
+                return get_appointment(self, appointment_id)
+            except ValueError:
+                return send_404(self)
 
         return send_404(self)
 
@@ -116,60 +123,81 @@ class ClinicRouter(BaseHTTPRequestHandler):
     # ---------------------------
     # CREATE (POST)
     # ---------------------------
-    #patients
     def do_POST(self):
+        # patients
         if self.path == "/api/patients":
             return create_patient(self)
 
-    #doctors
+        # doctors
         if self.path == "/api/doctors":
             return create_doctor(self)
 
-    #appointments
+        # appointments
         if self.path == "/api/appointments":
             return create_appointment(self)
+            
         return send_404(self)
 
 
     # ---------------------------
     # UPDATE (PUT)
     # ---------------------------
-    #patients
     def do_PUT(self):
+        # patients
         if self.path.startswith("/api/patients/"):
-            patient_id = int(self.path.split("/")[-1])
-            return update_patient(self, patient_id)
+            try:
+                patient_id = int(self.path.split("/")[-1])
+                return update_patient(self, patient_id)
+            except ValueError:
+                return send_404(self)
        
-    #doctors
+        # doctors
         if self.path.startswith("/api/doctors/"):
-           doctor_id = int(self.path.split("/")[-1])
-           return update_doctor(self, doctor_id)
+            try:
+                doctor_id = int(self.path.split("/")[-1])
+                return update_doctor(self, doctor_id)
+            except ValueError:
+                return send_404(self)
 
-    #ppointments
+        # appointments
         if self.path.startswith("/api/appointments/"):
-          appointment_id = int(self.path.split("/")[-1])
-          return update_appointment(self, appointment_id)
+            try:
+                appointment_id = int(self.path.split("/")[-1])
+                return update_appointment(self, appointment_id)
+            except ValueError:
+                return send_404(self)
+                
         return send_404(self)
 
 
     # ---------------------------
     # DELETE (DELETE)
     # ---------------------------
-    #patients
     def do_DELETE(self):
+        # patients
         if self.path.startswith("/api/patients/"):
-            patient_id = int(self.path.split("/")[-1])
-            return delete_patient(self, patient_id)
+            try:
+                patient_id = int(self.path.split("/")[-1])
+                return delete_patient(self, patient_id)
+            except ValueError:
+                return send_404(self)
 
-    #doctors
+        # doctors
         if self.path.startswith("/api/doctors/"):
-            doctor_id = int(self.path.split("/")[-1])
-            return delete_doctor(self, doctor_id)
+            try:
+                doctor_id = int(self.path.split("/")[-1])
+                return delete_doctor(self, doctor_id)
+            except ValueError:
+                return send_404(self)
 
-    #appointments
+        # appointments
         if self.path.startswith("/api/appointments/"):
-            appointment_id = int(self.path.split("/")[-1])
-            return delete_appointment(self, appointment_id)
+            try:
+                appointment_id = int(self.path.split("/")[-1])
+                return delete_appointment(self, appointment_id)
+            except ValueError:
+                return send_404(self)
+                
         return send_404(self)
 
 
