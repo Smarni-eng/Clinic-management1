@@ -20,7 +20,7 @@ def get_all_doctors(handler):
 # GET one doctor
 # ---------------------------
 def get_doctor(handler, doctor_id):
-    patient = service_get_one(doctor_id)
+    doctor = service_get_one(doctor_id)
     return send_json(handler, 200, doctor) if doctor else send_404(handler)
 
 
