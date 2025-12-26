@@ -1,7 +1,7 @@
 // Global app state
 let state = {
-  editingId: null,   // which student is being edited
-  patients: []       // list of all students
+  editingId: null,   // which doctor is being edited
+  doctors : []     // list of all doctors
 };
 
 // Update part of the state

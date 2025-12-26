@@ -1,4 +1,5 @@
 import { initPatientController } from "../controllers/patientController.js";
+import { initDoctorController } from "../controllers/doctorController.js";
 
 // Load a view into #app container
 async function loadView(path) {
@@ -19,6 +20,11 @@ export async function router() {
     initPatientController();
   }
 
+ else if (path === "/doctors") {
+    await loadView("/frontend/pages/doctors.html");
+    initDoctorController();
+  }
+  
   // else {
   //   await loadView("/frontend/pages/404.html");
   // }

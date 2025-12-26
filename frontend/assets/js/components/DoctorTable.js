@@ -15,7 +15,7 @@ export function renderDoctorTable(doctors) {
 
   noDoctors.style.display = "none";
 
-  doctors.forEach(Doctor => {
+  doctors.forEach(doctor => {
     const row = document.createElement("tr");
     row.className = "border-b";
 

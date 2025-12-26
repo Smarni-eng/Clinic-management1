@@ -5,7 +5,7 @@ export function resetForm() {
   // Use the native .reset() method on the HTML form element
   $("doctorForm").reset();
 
-  // Change the submit button text back to "Add Patient"
+  // Change the submit button text back to "Add Doctor"
   $("submitBtn").textContent = "Add Doctor";
 
   // Hide the "Cancel" button, as we are no longer in 'edit' mode
