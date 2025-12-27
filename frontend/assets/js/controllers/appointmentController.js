@@ -7,7 +7,7 @@ import {
 } from "../services/appointmentService.js";
 
 import { showAlert } from "../components/Alert.js";
-import { renderDoctorTable } from "../components/AppointmentTable.js";
+import { renderAppointmentTable } from "../components/AppointmentTable.js";
 import { resetForm, fillForm } from "../components/AppointmentForm.js";
 
 import { setState, getState } from "../state/store.js";

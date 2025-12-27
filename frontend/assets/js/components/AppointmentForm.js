@@ -1,11 +1,11 @@
 import { $, createElement } from "../utils/dom.js";
 
-// Resets the input form to its default state for creating a new doctor
+// Resets the input form to its default state for creating a new appointment
 export function resetForm() {
   // Use the native .reset() method on the HTML form element
   $("appointmentForm").reset();
 
-  // Change the submit button text back to "Add Doctor"
+  // Change the submit button text back to "Add Appointment"
   $("submitBtn").textContent = "Add Appointment";
 
   // Hide the "Cancel" button, as we are no longer in 'edit' mode
