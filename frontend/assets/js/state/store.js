@@ -1,7 +1,7 @@
 // Global app state
 let state = {
-  editingId: null,   // which appointment is being edited
-  appointments : []     // list of all appointments
+  editingId: null,   // which billing is being edited
+  billings : []     // list of all billings
 };
 
 // Update part of the state

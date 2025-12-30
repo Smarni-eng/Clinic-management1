@@ -53,6 +53,21 @@ def init_database():
             FOREIGN KEY (doctor_id) REFERENCES doctors(id)
         )
     """)
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS billings (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            patient_id INTEGER,
+            doctor_id INTEGER,
+            amount REAL,
+            payment_status TEXT,
+            payment_method TEXT,
+            status TEXT,
+            created_at TEXT,
+            updated_at TEXT,
+            FOREIGN KEY (patient_id) REFERENCES patients(id),
+            FOREIGN KEY (doctor_id) REFERENCES doctors(id)
+        )
+    """)
 
     conn.commit()
     conn.close()

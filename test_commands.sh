@@ -117,3 +117,39 @@ curl -X DELETE "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/a
 - install https://github.com/coleifer/sqlite-web
 - pip install sqlite-web
 - sqlite_web clinic.db
+
+# A. Get All Billings
+curl -X GET "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/api/billings"
+
+# B. Get One Billing
+curl -X GET "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/api/billings/1"
+# C. Create Billing
+curl -X POST "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/api/billings" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_id": 1,
+    "doctor_id": 2,
+    "amount": 5000,
+    "payment_status": "Paid",
+    "payment_method": "Credit Card",
+    "status": "Completed"
+  }'
+# D. Update Billing
+curl -X PUT "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/api/billings/1" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patient_id": 2,
+    "doctor_id": 3,
+    "amount": 7500,
+    "payment_status": "Pending",
+    "payment_method": "Cash",
+    "status": "Not Completed"
+  }'
+
+# E. Delete Billing
+curl -X DELETE "https://sturdy-fortnight-pj5qw4x64p97f7664-8000.app.github.dev/api/billings/1"
+
+##################### DB Observation Via SQLite Web
+- install https://github.com/coleifer/sqlite-web
+- pip install sqlite-web
+- sqlite_web clinic.db

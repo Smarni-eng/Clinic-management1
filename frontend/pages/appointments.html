@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+     <title>Document</title>
 </head>
 <body>
     <div class="max-w-5xl mx-auto p-6">
-
+                
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-3xl font-bold">Clinic Management System</h1>
     <a href="/home" data-link class="text-sm text-blue-600 underline">← Back to Home</a>
   </div>
-
+                            
   <!-- Add / Edit Doctor Form -->
   <div class="bg-white p-5 rounded shadow mb-8">
     <h2 class="font-semibold mb-3 text-lg">Add New Appointment</h2>
@@ -22,12 +22,13 @@
       <input type="date" id="appointment_date" placeholder="Appointment Date" required class="w-full border rounded px-3 py-2">
       <input type="time" id="appointment_time" placeholder="Appointment Time" required class="w-full border rounded px-3 py-2">
       <input type="text" id="status" placeholder="Status (e.g., Scheduled, Completed)" required class="w-full border rounded px-3 py-2">
+
       <div class="flex space-x-2">
         <button type="submit" id="submitBtn"
           class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
           Add Appointment
         </button>
-
+                                                                                                                
         <button type="button" id="cancelBtn"
           class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
           Cancel
@@ -35,16 +36,16 @@
       </div>
     </form>
   </div>
-
+                                                                                                                                                                
   <!-- Appointments Table -->
   <div class="bg-white p-5 rounded shadow w-full">
     <h2 class="font-semibold mb-4 text-lg">All Appointments</h2>
-
+                                                                                                                                                                        
     <!-- Loading Spinner -->
     <div id="loadingSpinner" class="text-center py-4">
       <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
     </div>
-
+                                                                                                                                                                                          
     <!-- Appointments Table Container -->
     <div id="appointmentsTableContainer" class="hidden overflow-x-auto">
       <table class="min-w-full text-left border">
@@ -61,7 +62,6 @@
         </thead>
         <tbody id="appointmentsTableBody"></tbody>
       </table>
-
       <p id="noAppointments" class="text-center text-gray-500 mt-3 hidden">
         No appointments found. Add one using the form above.
       </p>
@@ -70,6 +70,5 @@
 
   <!-- Alert container -->
   <div id="alertContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
-</div>
 </body>
 </html>

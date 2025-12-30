@@ -28,6 +28,22 @@ from controllers.appointments import (
     delete_appointment,
 )
 
+from controllers.appointments import (
+    get_all_appointments,
+    get_appointment,
+    create_appointment,
+    update_appointment,
+    delete_appointment,
+)
+
+from controllers.billings import (
+    get_all_billings,
+    get_billing,
+    create_billing,
+    update_billing,
+    delete_billing,
+)
+
 from core.static import serve_static
 from core.responses import send_404
 from core.middleware import add_cors_headers
@@ -117,6 +133,17 @@ class ClinicRouter(BaseHTTPRequestHandler):
             except ValueError:
                 return send_404(self)
 
+         # billings
+        if path == "/api/billings":
+            return get_all_billings(self)
+
+        if path.startswith("/api/billings/"):
+            try:
+                billing_id = int(path.split("/")[-1])
+                return get_billing(self, billing_id)
+            except ValueError:
+                return send_404(self)
+
         return send_404(self)
 
 
@@ -135,7 +162,11 @@ class ClinicRouter(BaseHTTPRequestHandler):
         # appointments
         if self.path == "/api/appointments":
             return create_appointment(self)
-            
+
+        # billings
+        if self.path == "/api/billings":
+            return create_billing(self)
+
         return send_404(self)
 
 
@@ -164,6 +195,14 @@ class ClinicRouter(BaseHTTPRequestHandler):
             try:
                 appointment_id = int(self.path.split("/")[-1])
                 return update_appointment(self, appointment_id)
+            except ValueError:
+                return send_404(self)
+
+         # billings
+        if self.path.startswith("/api/billings/"):
+            try:
+                billing_id = int(self.path.split("/")[-1])
+                return update_billing(self, billing_id)
             except ValueError:
                 return send_404(self)
                 
@@ -195,6 +234,14 @@ class ClinicRouter(BaseHTTPRequestHandler):
             try:
                 appointment_id = int(self.path.split("/")[-1])
                 return delete_appointment(self, appointment_id)
+            except ValueError:
+                return send_404(self)
+
+        # billings
+        if self.path.startswith("/api/billings/"):
+            try:
+                billing_id = int(self.path.split("/")[-1])
+                return delete_billing(self, billing_id)
             except ValueError:
                 return send_404(self)
                 
