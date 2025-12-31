@@ -20,10 +20,12 @@
       <input type="text" id="patient_id" placeholder="Patient ID" required class="w-full border rounded px-3 py-2">
       <input type="text" id="doctor_id" placeholder="Doctor ID" required class="w-full border rounded px-3 py-2">
       <input type="text" id="amount" placeholder="Amount" required class="w-full border rounded px-3 py-2">
-      <input type="date" id="payment_status" placeholder="Payment Status" required class="w-full border rounded px-3 py-2">
-      <input type="date" id="payment_method" placeholder="Payment Method" required class="w-full border rounded px-3 py-2">
-      <input type="text" id="status" placeholder="Status (e.g., Paid, Unpaid)" required class="w-full border rounded px-3 py-2">
-
+      <select id="payment_status" required class="w-full border rounded px-3 py-2">
+        <option value="">Select Payment Status</option>
+        <option value="Paid">Paid</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
       <select id="payment_method" required class="w-full border rounded px-3 py-2">
         <option value="">Select Payment Method</option>
         <option value="Cash">Cash</option>
