@@ -4,5 +4,5 @@ window.ENV = {
   API_PATIENTS_URL: "/api/patients",
   API_DOCTORS_URL: "/api/doctors",
   API_APPOINTMENTS_URL: "/api/appointments",
-  API_BILLINGS_URL: "/billings"
+  API_BILLINGS_URL: "/api/billings"
 };

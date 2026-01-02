@@ -15,7 +15,7 @@ import { $ } from "../utils/dom.js";
 
 // Setup event listeners and load initial data
 export function initBillingController() {
-  loadBilling();
+  loadBillings();
 
   // Handle Form Submissions
   $("billingForm").addEventListener("submit", async (e) => {
@@ -45,9 +45,9 @@ export function initBillingController() {
 
 
 // Fetch all billing data from the API and update the user interface
-export async function loadBilling() {
+export async function loadBillings() {
   const spinner = $("loadingSpinner");
-  const table = $("billingTableContainer");
+  const table = $("billingsTableContainer");
 
   spinner.style.display = "block";
   table.style.display = "none";
@@ -68,7 +68,7 @@ export async function createNewBilling(data) {
   if (res.ok) {
     showAlert("Billing added!");
     resetForm();
-    loadBilling();
+    loadBillings();
   } else {
     showAlert("Failed to add billing!");
   }
@@ -97,7 +97,7 @@ export async function updateBilling(id, data) {
     showAlert("Updated!");
     resetForm();
     setState({ editingId: null });
-    loadBilling();
+    loadBillings();
   } else {
     showAlert("Failed to update billing!");
   }
@@ -110,7 +110,7 @@ export async function deleteBillingAction(id) {
   const res = await apiDelete(id);
   if (res.ok) {
     showAlert("Deleted!");
-    loadBilling();
+    loadBillings();
   } else {
     showAlert("Failed to delete billing!");
   }

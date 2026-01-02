@@ -3,8 +3,8 @@ import { editBilling, deleteBillingAction } from "../controllers/billingControll
 
 // Renders the list of billing records into an HTML table
 export function renderBillingTable(billingRecords) {
-  const body = $("billingTableBody");
-  const noBillingRecords = $("noBillingRecords");
+  const body = $("billingRecordsTableBody");
+  const noBillingRecords = $("noBilling");
 
   body.innerHTML = "";
 
@@ -14,6 +14,7 @@ export function renderBillingTable(billingRecords) {
   }
 
   noBillingRecords.style.display = "none";
+  
   billingRecords.forEach(billing => {
     const row = document.createElement("tr");
     row.className = "border-b";
