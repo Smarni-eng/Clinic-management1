@@ -13,9 +13,30 @@
 
   <style>
     body {
-      background: linear-gradient(135deg, #e0f2fe, #f0f9ff, #ecfeff);
-      min-height: 100vh;
-    }
+    position: relative;
+    min-height: 100vh;
+    background-image: url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* White transparent overlay */
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.85); /* opacity control */
+    z-index: 0;
+  }
+
+  /* Bring content above overlay */
+  header,
+  main {
+    position: relative;
+    z-index: 1;
+  }
+    
   </style>
 </head>
 
@@ -44,46 +65,46 @@
 
     <div class="grid grid-cols-1 sm:grid-cols2 lg:grid-cols-3 gap-6">
 
-      <a href="/patients" class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+      <a href="/patients" class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-users text-4xl text-blue-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Patient Records</h3>
       </a>
 
       <a href="/api/patients" target="_blank"
-         class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+         class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-code text-4xl text-gray-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Patient API</h3>
       </a>
 
-      <a href="/doctors" class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+      <a href="/doctors" class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-user-doctor text-4xl text-green-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Doctor Records</h3>
       </a>
 
       <a href="/api/doctors" target="_blank"
-         class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+         class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-code text-4xl text-gray-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Doctor API</h3>
       </a>
 
-      <a href="/appointments" class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+      <a href="/appointments" class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-calendar-check text-4xl text-purple-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Appointments</h3>
       </a>
 
       <a href="/api/appointments" target="_blank"
-         class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+        class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-code text-4xl text-gray-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Appointments API</h3>
       </a>
 
-      <a href="/billings" class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+      <a href="/billings" class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-file-invoice-dollar text-4xl text-orange-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Billing Records</h3>
       </a>
 
       <a href="/api/billings" target="_blank"
-         class="group bg-white p-6 rounded-xl shadow hover:shadow-xl transition">
+         class="group bg-white/90 backdrop-blur p-6 rounded-2xl shadow-md hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
         <i class="fa-solid fa-code text-4xl text-gray-600 mb-4"></i>
         <h3 class="text-lg font-semibold">Billing API</h3>
       </a>

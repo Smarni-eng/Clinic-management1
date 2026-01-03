@@ -4,14 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <div class="max-w-5xl mx-auto p-6">
 
   <div class="flex items-center justify-between mb-6">
     <h1 class="text-3xl font-bold">Clinic Management System</h1>
-    <a href="/home" data-link class="text-sm text-blue-600 underline">← Back to Home</a>
+
+    <!-- Right side controls -->
+  <div class="flex items-center gap-4">
+    
+    <!-- Circular Image Upload -->
+    <label class="relative cursor-pointer">
+      <input
+        type="file"
+        id="patientImage"
+        accept="image/*"
+        class="hidden"
+      />
+
+      <!-- Clickable circular avatar -->
+<label for="patientImage" class="cursor-pointer">
+  <img
+    id="imagePreview"
+    src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+    class="w-12 h-12 rounded-full object-cover border-2 border-blue-500 shadow
+           hover:opacity-90 hover:ring-2 hover:ring-indigo-400 transition"
+        alt="Upload Patient"
+        title="Upload Patient Photo"
+      />
+    </label>
+    <a href="/home" data-link
+   class="inline-flex items-center gap-1 px-6 py-2 text-sm font-semibold
+          text-white rounded-full
+          bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+          hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600
+          transition-all duration-300 shadow-md hover:shadow-lg">
+   ← Back to Home
+    </a>
   </div>
+</div>
 
   <!-- Add / Edit Student Form -->
   <div class="bg-white p-5 rounded shadow mb-8">
@@ -72,9 +106,44 @@
       </p>
     </div>
   </div>
+  
 
   <!-- Alert container -->
   <div id="alertContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const imageInput = document.getElementById("patientImage");
+    const imagePreview = document.getElementById("imagePreview");
+
+    if (!imageInput || !imagePreview) {
+      console.error("Image elements not found");
+      return;
+    }
+
+    imageInput.addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (!file) {
+        console.log("No file selected");
+        return;
+      }
+
+      if (!file.type.startsWith("image/")) {
+        alert("Please select an image file");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        imagePreview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  });
+</script>
+
+
 </body>
 </html>
