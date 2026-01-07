@@ -244,6 +244,10 @@ class ClinicRouter(BaseHTTPRequestHandler):
                 return delete_billing(self, billing_id)
             except ValueError:
                 return send_404(self)
+
+        if not self.path.startswith("/api/"):
+            serve_static(self, "frontend/pages/index.html")
+            return
                 
         return send_404(self)
 
