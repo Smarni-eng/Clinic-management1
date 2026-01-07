@@ -6,12 +6,55 @@
     <title>Document</title>
     <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <div class="max-w-5xl mx-auto p-6">
+  <style>
+  body {
+    /* A vibrant, modern mesh gradient */
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Fallback */
+    background: 
+        radial-gradient(at 0% 0%, rgba(165, 180, 252, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 0%, rgba(249, 168, 212, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.5) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(196, 181, 253, 0.5) 0px, transparent 50%);
+    background-color: #f3f4f6;
+    background-attachment: fixed;
+    margin: 0;
+    min-height: 100vh;
+  }
 
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-3xl font-bold">Clinic Management System</h1>
+  /* Make the cards pop against the new background */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+</style>
+</head>
+<body class="min-h-screen
+             bg-gradient-to-br
+             from-blue-100
+             via-pink-100
+             to-purple-100">
+
+
+   <section class="max-w-6xl mx-auto mb-10 mt-6 px-4">
+  <div class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100
+              border border-white/70
+              rounded-3xl p-8 shadow-lg backdrop-blur-md">
+
+    <h1 class="text-3xl font-bold text-gray-800 mb-1">
+      Patients
+    </h1>
+
+    <p class="text-gray-600">
+      Manage patient records and medical information
+    </p>
+
+  </div>
+</section>
+
+
+
 
     <!-- Right side controls -->
   <div class="flex items-center gap-4">
@@ -36,19 +79,21 @@
         title="Upload Patient Photo"
       />
     </label>
-    <a href="/home" data-link
-   class="inline-flex items-center gap-1 px-6 py-2 text-sm font-semibold
+    <a href="/home"
+   class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold
           text-white rounded-full
           bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
-          hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600
-          transition-all duration-300 shadow-md hover:shadow-lg">
+          hover:scale-105 transition-all shadow-md">
    ← Back to Home
-    </a>
+</a>
+
   </div>
 </div>
 
   <!-- Add / Edit Student Form -->
-  <div class="bg-white p-5 rounded shadow mb-8">
+  <div class="max-w-6xl mx-auto px-4 mb-8">
+  <div class="bg-gradient-to-br from-white via-blue-50 to-purple-50
+              p-6 rounded-2xl shadow-lg border border-white/70">
     <h2 class="font-semibold mb-3 text-lg">Add New Patient</h2>
     <form id="patientForm" class="space-y-3">
       <input type="text" id="name" placeholder="Name" required class="w-full border rounded px-3 py-2">
@@ -60,21 +105,26 @@
       <input type="text" id="doctor" placeholder="Doctor" required class="w-full border rounded px-3 py-2">
 
       <div class="flex space-x-2">
-        <button type="submit" id="submitBtn"
-          class="flex-1 bg-blue-500 hover:bg-blue-600 text-white py-2 rounded">
-          Add Patient
-        </button>
+  <button type="submit"
+    class="flex-1 py-2 rounded-full text-white font-semibold
+           bg-gradient-to-r from-blue-500 to-purple-500
+           hover:from-blue-600 hover:to-purple-600 transition shadow">
+    Add Patient
+  </button>
 
-        <button type="button" id="cancelBtn"
-          class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
-          Cancel
-        </button>
-      </div>
+  <button type="button" id="cancelBtn"
+    class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
+    Cancel
+      </button>
+     </div>
     </form>
+  </div>
   </div>
 
   <!-- Patients Table -->
-  <div class="bg-white p-5 rounded shadow w-full">
+  <div class="max-w-6xl mx-auto px-4">
+  <div class="bg-white/80 backdrop-blur-md
+              p-6 rounded-2xl shadow-lg border border-white/70">
     <h2 class="font-semibold mb-4 text-lg">All Patients</h2>
 
     <!-- Loading Spinner -->
@@ -85,7 +135,7 @@
     <!-- Patients Table Container -->
     <div id="patientsTableContainer" class="hidden overflow-x-auto">
       <table class="min-w-full text-left border">
-        <thead class="bg-gray-200">
+        <thead class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100">
           <tr>
             <th class="px-3 py-2">ID</th>
             <th class="px-3 py-2">Name</th>
@@ -98,7 +148,8 @@
             <th class="px-3 py-2">Actions</th>
           </tr>
         </thead>
-        <tbody id="patientsTableBody"></tbody>
+        <tbody id="patientsTableBody" class="divide-y hover:[&_tr]:bg-blue-50 transition">
+          </tbody>
       </table>
 
       <p id="noPatients" class="text-center text-gray-500 mt-3 hidden">

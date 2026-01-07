@@ -21,14 +21,15 @@
     background-repeat: no-repeat;
   }
 
-  /* White transparent overlay */
+ /* Crystal glass overlay */
   body::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(255, 255, 255, 0.85); /* opacity control */
-    z-index: 0;
-  }
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.35); /* crystal glass */
+  z-index: 0;
+}
+
 
   /* Bring content above overlay */
   header,
@@ -47,18 +48,65 @@
 <body>
 
   <!-- Header -->
-  <header class="bg-blue-600 text-white py-5 shadow">
-    <div class="max-w-6xl mx-auto flex justify-between items-center px-4">
-      <h1 class="text-2xl font-bold">Clinic Management</h1>
-      <nav class="space-x-6">
-        <a href="/" class="hover:underline">Home</a>
-        <a href="/patients" class="hover:underline">Patients</a>
-        <a href="/doctors" class="hover:underline">Doctors</a>
-        <a href="/appointments" class="hover:underline">Appointments</a>
-        <a href="/billings" class="hover:underline">Billings</a>
-      </nav>
-    </div>
-  </header>
+  <header class="w-full py-6">
+  <div class="max-w-7xl mx-auto px-6 py-5
+              bg-gradient-to-r from-blue-600 via-cyan-500 to-purple-600
+              rounded-3xl shadow-xl
+              flex flex-wrap items-center justify-between gap-4">
+
+
+    <!-- Title -->
+    <h1 class="text-2xl font-bold text-white whitespace-nowrap">
+      Clinic Management
+    </h1>
+
+   <!-- Navbar Buttons -->
+<nav class="flex flex-wrap items-center gap-3">
+  <a href="/"
+     class="px-4 py-2 rounded-full
+            bg-white/90 text-gray-800 text-sm font-medium
+            hover:bg-white transition
+            shadow-sm whitespace-nowrap">
+    Home
+  </a>
+
+  <a href="/patients"
+     class="px-4 py-2 rounded-full
+            bg-white/90 text-gray-800 text-sm font-medium
+            hover:bg-white transition
+            shadow-sm whitespace-nowrap">
+    Patients
+  </a>
+
+  <a href="/doctors"
+     class="px-4 py-2 rounded-full
+            bg-white/90 text-gray-800 text-sm font-medium
+            hover:bg-white transition
+            shadow-sm whitespace-nowrap">
+    Doctors
+  </a>
+
+  <a href="/appointments"
+     class="px-4 py-2 rounded-full
+            bg-white/90 text-gray-800 text-sm font-medium
+            hover:bg-white transition
+            shadow-sm whitespace-nowrap">
+    Appointments
+  </a>
+
+  <a href="/billings"
+     class="px-4 py-2 rounded-full
+            bg-white/90 text-gray-800 text-sm font-medium
+            hover:bg-white transition
+            shadow-sm whitespace-nowrap">
+    Billings
+  </a>
+</nav>
+
+
+  </div>
+</header>
+
 
   <!-- Main Content -->
   <main class="max-w-6xl mx-auto px-4 py-12 text-center">
