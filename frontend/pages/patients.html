@@ -5,7 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+ <script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        animation: {
+          'fade-in': 'fadeIn 0.6s ease-out',
+          'slide-up': 'slideUp 0.5s ease-out'
+        },
+        keyframes: {
+          fadeIn: {
+            '0%': { opacity: 0 },
+            '100%': { opacity: 1 }
+          },
+          slideUp: {
+            '0%': { opacity: 0, transform: 'translateY(12px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' }
+          }
+        }
+      }
+    }
+  }
+</script>
+
   <style>
   body {
     /* A vibrant, modern mesh gradient */
@@ -29,12 +51,80 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
   }
 </style>
+<style>
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(120px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(60px) scale(0.95);
+  }
+}
+
+.pop-in {
+  animation: slideInRight 0.6s ease-out forwards,
+             float 3s ease-in-out infinite;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s ease forwards;
+}
+
+</style>
+
 </head>
 <body class="min-h-screen
              bg-gradient-to-br
              from-blue-100
              via-pink-100
              to-purple-100">
+<!-- Patient Welcome Popup -->
+<div id="patientPopup"
+     class="fixed top-24 right-6 z-50 pointer-events-none">
+
+
+  <div class="pop-in bg-white/80 backdrop-blur-xl
+              rounded-3xl shadow-2xl border border-white/60
+              p-6 text-center">
+
+    <img
+  src="https://images.unsplash.com/photo-1582750433449-648ed127bb54"
+  alt="Male Doctor"
+  class="w-32 h-32 mx-auto mb-4 rounded-full object-cover shadow-lg"
+/>
+
+
+
+
+
+    <h3 class="text-xl font-semibold text-gray-800">
+      Patient Management
+    </h3>
+
+    <p class="text-sm text-gray-600">
+      Caring for patients made simple 💙
+    </p>
+  </div>
+
+</div>
 
 
    <section class="max-w-6xl mx-auto mb-10 mt-6 px-4">
@@ -122,41 +212,55 @@
   </div>
 
   <!-- Patients Table -->
-  <div class="max-w-6xl mx-auto px-4">
-  <div class="bg-white/80 backdrop-blur-md
-              p-6 rounded-2xl shadow-lg border border-white/70">
-    <h2 class="font-semibold mb-4 text-lg">All Patients</h2>
+<div class="max-w-6xl mx-auto px-4 mt-8 animate-fade-in">
+  <div class="glass-card rounded-3xl shadow-xl border border-white/60 overflow-hidden">
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="text-center py-4">
-      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
+    <!-- Header -->
+    <div class="px-6 py-4 border-b border-white/50">
+      <h2 class="text-xl font-semibold text-gray-800">All Patients</h2>
+      <p class="text-sm text-gray-500">View, edit and manage patient records</p>
     </div>
 
-    <!-- Patients Table Container -->
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="py-8 text-center">
+      <div class="animate-spin h-8 w-8 border-4 border-blue-400 border-t-transparent rounded-full mx-auto"></div>
+      <p class="text-sm text-gray-500 mt-2">Loading patients...</p>
+    </div>
+
+    <!-- Table -->
     <div id="patientsTableContainer" class="hidden overflow-x-auto">
-      <table class="min-w-full text-left border">
-        <thead class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100">
+      <table class="min-w-full text-sm text-left">
+        <thead class="sticky top-0 z-10
+                     bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+                     text-white">
           <tr>
-            <th class="px-3 py-2">ID</th>
-            <th class="px-3 py-2">Name</th>
-            <th class="px-3 py-2">Age</th>
-            <th class="px-3 py-2">Gender</th>
-            <th class="px-3 py-2">Phone</th>
-            <th class="px-3 py-2">Email</th>
-            <th class="px-3 py-2">Disease</th>
-            <th class="px-3 py-2">Doctor</th>
-            <th class="px-3 py-2">Actions</th>
+            <th class="px-5 py-4">ID</th>
+            <th class="px-5 py-4">Name</th>
+            <th class="px-5 py-4">Age</th>
+            <th class="px-5 py-4">Gender</th>
+            <th class="px-5 py-4">Phone</th>
+            <th class="px-5 py-4">Email</th>
+            <th class="px-5 py-4">Disease</th>
+            <th class="px-5 py-4">Doctor</th>
+            <th class="px-5 py-4 text-center">Actions</th>
           </tr>
         </thead>
-        <tbody id="patientsTableBody" class="divide-y hover:[&_tr]:bg-blue-50 transition">
-          </tbody>
+
+        <tbody id="patientsTableBody"
+          class="divide-y divide-gray-200
+                 [&>tr]:animate-slide-up
+                 [&>tr:hover]:bg-blue-50">
+        </tbody>
       </table>
 
-      <p id="noPatients" class="text-center text-gray-500 mt-3 hidden">
+      <p id="noPatients" class="text-center text-gray-500 py-6 hidden">
         No patients found. Add one using the form above.
       </p>
     </div>
   </div>
+</div>
+
+
   
 
   <!-- Alert container -->
@@ -195,6 +299,20 @@
   });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const popup = document.getElementById("patientPopup");
+
+  // Hide after 2.5 seconds
+  setTimeout(() => {
+    popup.firstElementChild.classList.add("fade-out");
+
+    setTimeout(() => {
+      popup.remove();
+    }, 500);
+  }, 2500);
+});
+</script>
 
 </body>
 </html>

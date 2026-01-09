@@ -19,6 +19,7 @@ def db_get_all():
             patients.phone,
             patients.email,
             patients.disease,
+            doctors.id AS doctor_id,
             doctors.name AS doctor_name,
             patients.created_at
         FROM patients
