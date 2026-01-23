@@ -1,57 +1,123 @@
-import { initPatientController } from "../controllers/patientController.js";
-import { initDoctorController } from "../controllers/doctorController.js";
-import { initAppointmentController } from "../controllers/appointmentController.js";
-import { initBillingController } from "../controllers/billingController.js";
+// frontend/assets/js/router/viewRouter.js
 
-// Load a view into #app container
 async function loadView(path) {
-  const html = await fetch(path).then(res => res.text());
+  const res = await fetch(path);
+
+  if (!res.ok) {
+    const fallback = await fetch("/frontend/pages/404.html").then(r => r.text());
+    document.querySelector("#app").innerHTML = fallback;
+    return;
+  }
+
+  const html = await res.text();
   document.querySelector("#app").innerHTML = html;
 }
 
-// Decide which view to load based on URL
 export async function router() {
-  const path = window.location.pathname;
+  let path = window.location.pathname;
+  if (path.length > 1) path = path.replace(/\/$/, "");
 
+  // --------------------
+  // HOME
+  // --------------------
   if (path === "/" || path === "/home") {
     await loadView("/frontend/pages/home.html");
+    return;
   }
 
-  else if (path === "/patients") {
+  // --------------------
+  // PATIENTS
+  // --------------------
+  if (path === "/patients") {
     await loadView("/frontend/pages/patients.html");
-    initPatientController();
+    const mod = await import("../controllers/patientController.js");
+    mod.initPatientController();
+    return;
   }
 
- else if (path === "/doctors") {
+  // --------------------
+  // DOCTORS
+  // --------------------
+  if (path === "/doctors") {
     await loadView("/frontend/pages/doctors.html");
-    initDoctorController();
+    const mod = await import("../controllers/doctorController.js");
+    mod.initDoctorController();
+    return;
   }
 
-  else if (path === "/appointments") {
+  // --------------------
+  // APPOINTMENTS
+  // --------------------
+  if (path === "/appointments") {
     await loadView("/frontend/pages/appointments.html");
-    initAppointmentController();
+    const mod = await import("../controllers/appointmentController.js");
+    mod.initAppointmentController();
+    return;
   }
 
-  else if (path === "/billings") {
+  // --------------------
+  // BILLINGS
+  // --------------------
+  if (path === "/billings") {
     await loadView("/frontend/pages/billings.html");
-    initBillingController();
+    const mod = await import("../controllers/billingController.js");
+    mod.initBillingController();
+    return;
   }
 
-  // else {
-  //   await loadView("/frontend/pages/404.html");
-  // }
+  // --------------------
+  // REPORTS (JOIN VIEW)
+  // --------------------
+  if (path === "/reports/visits") {
+    await loadView("/frontend/pages/report_visits.html");
+    const mod = await import("../controllers/reportController.js");
+    mod.initClinicVisitReportController(); // you can rename later
+    return;
+  }
+
+  // --------------------
+  // PROFILES (LIST)
+  // --------------------
+  if (path === "/profiles") {
+    await loadView("/frontend/pages/profiles.html");
+    const mod = await import("../controllers/profilesController.js");
+    mod.initProfilesController();
+    return;
+  }
+
+  // --------------------
+  // PROFILE (DYNAMIC)
+  // --------------------
+  if (path.startsWith("/profiles/")) {
+    const idStr = path.split("/")[2];
+    const id = Number(idStr);
+
+    if (!Number.isInteger(id)) {
+      await loadView("/frontend/pages/404.html");
+      return;
+    }
+
+    await loadView("/frontend/pages/profile.html");
+    const mod = await import("../controllers/profileController.js");
+    mod.initProfileController(id);
+    return;
+  }
+
+  // --------------------
+  // DEFAULT
+  // --------------------
+  await loadView("/frontend/pages/404.html");
 }
 
-// Make links work without page reload
 export function initRouterEvents() {
   document.addEventListener("click", (e) => {
-    if (e.target.matches("[data-link]")) {
-      e.preventDefault();
-      history.pushState(null, "", e.target.href);
-      router();
-    }
+    const link = e.target.closest("[data-link]");
+    if (!link) return;
+
+    e.preventDefault();
+    history.pushState(null, "", link.getAttribute("href"));
+    router();
   });
 
-  // Back/forward buttons support
   window.addEventListener("popstate", router);
 }

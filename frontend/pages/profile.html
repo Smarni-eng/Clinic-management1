@@ -1,0 +1,115 @@
+<div class="max-w-6xl mx-auto p-6">
+
+  <!-- Header -->
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h1 class="text-3xl font-bold">Patient Profile</h1>
+      <p class="text-sm text-gray-600">Personal details and visit history</p>
+    </div>
+
+    <a href="/patients" data-link
+      class="inline-flex items-center gap-2 px-4 py-2 rounded bg-blue-600 text-white text-sm hover:bg-blue-700">
+      ← Back to Patients
+    </a>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+    <!-- LEFT: Patient Details -->
+    <div class="bg-white rounded shadow border overflow-hidden">
+      <div class="p-4 border-b">
+        <h2 class="font-semibold text-lg">Patient Details</h2>
+        <p class="text-sm text-gray-600">Basic information</p>
+      </div>
+
+      <div class="p-4">
+        <div id="basicLoading" class="text-center py-6">
+          <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
+          <p class="text-sm text-gray-500 mt-2">Loading...</p>
+        </div>
+
+        <div id="basicDetails" class="hidden space-y-4">
+          <div class="border rounded p-3 bg-gray-50">
+            <div class="text-xs text-gray-500">Patient ID</div>
+            <div class="font-semibold" id="patientId">—</div>
+          </div>
+
+          <div class="border rounded p-3 bg-gray-50">
+            <div class="text-xs text-gray-500">Name</div>
+            <div class="font-semibold" id="patientName">—</div>
+          </div>
+
+          <div class="border rounded p-3 bg-gray-50">
+            <div class="text-xs text-gray-500">Age</div>
+            <div class="font-semibold" id="patientAge">—</div>
+          </div>
+
+          <div class="border rounded p-3 bg-gray-50">
+            <div class="text-xs text-gray-500">Phone</div>
+            <div class="font-semibold" id="patientPhone">—</div>
+          </div>
+
+          <div class="mt-4 bg-blue-50 border border-blue-200 rounded p-3 text-sm">
+            <div class="font-semibold text-blue-700">Total Visits</div>
+            <div class="text-blue-900 font-bold">
+              <span id="totalVisits">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Visit History (JOIN REPORT) -->
+    <div class="lg:col-span-2 bg-white rounded shadow border overflow-hidden">
+      <div class="p-4 border-b flex items-start justify-between gap-4">
+        <div>
+          <h2 class="font-semibold text-lg">Visit History</h2>
+          <p class="text-sm text-gray-600">
+            Doctor • Specialty • Date • Fees • Payment Status
+          </p>
+        </div>
+
+        <div class="flex gap-2">
+          <button id="exportCsvBtn"
+            class="px-3 py-1.5 text-sm border rounded hover:bg-gray-50">
+            Export CSV
+          </button>
+
+          <button id="exportPdfBtn"
+            class="px-3 py-1.5 text-sm border rounded hover:bg-gray-50">
+            Export PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="p-4">
+        <div id="joinLoading" class="text-center py-6">
+          <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
+          <p class="text-sm text-gray-500 mt-2">Loading...</p>
+        </div>
+
+        <div id="joinTableContainer" class="hidden overflow-x-auto">
+          <table class="min-w-full border text-left">
+            <thead class="bg-gray-200">
+              <tr>
+                <th class="px-3 py-2">Visit ID</th>
+                <th class="px-3 py-2">Doctor</th>
+                <th class="px-3 py-2">Specialty</th>
+                <th class="px-3 py-2">Date</th>
+                <th class="px-3 py-2">Fees</th>
+                <th class="px-3 py-2">Status</th>
+              </tr>
+            </thead>
+            <tbody id="joinTableBody"></tbody>
+          </table>
+
+          <p id="noVisits" class="hidden text-center text-gray-500 mt-3">
+            No visits found for this patient.
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

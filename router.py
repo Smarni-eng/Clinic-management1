@@ -4,6 +4,8 @@ from datetime import datetime
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse
 
+from controllers.reports import get_clinic_visit_report
+
 from controllers.patients import (
     get_all_patients,
     get_patient,
@@ -24,15 +26,6 @@ from controllers.appointments import (
     get_all_appointments,
     get_appointment,
     create_appointment,
-    update_appointment,
-    delete_appointment,
-)
-
-from controllers.appointments import (
-    get_all_appointments,
-    get_appointment,
-    create_appointment,
-    update_appointment,
     delete_appointment,
 )
 
@@ -40,7 +33,6 @@ from controllers.billings import (
     get_all_billings,
     get_billing,
     create_billing,
-    update_billing,
     delete_billing,
 )
 
@@ -53,7 +45,13 @@ from core.middleware import add_cors_headers
 # UI ROUTER (SPA shell + static)
 # -------------------------------
 
-FRONTEND_ROUTES = {"/", "/home", "/patients", "/doctors", "/appointments", "/billings"}
+FRONTEND_ROUTES = {
+    "/", "/home",
+    "/patients", "/doctors", "/appointments", "/billings",
+    "/reports/clinic-visits",
+    "/docs/flow", "/docs",
+    "/profiles",
+}
 
 def handle_ui_routes(handler, path):
     if path in FRONTEND_ROUTES:
@@ -66,6 +64,10 @@ def handle_ui_routes(handler, path):
             serve_static(handler, "frontend/pages/index.html")
             return True
 
+    if path.startswith("/assets/"):
+        serve_static(handler, "frontend" + path)
+        return True
+
     if path.startswith("/frontend/"):
         serve_static(handler, path.lstrip("/"))
         return True
@@ -74,7 +76,23 @@ def handle_ui_routes(handler, path):
         serve_static(handler, "openapi.yaml")
         return True
 
+    if path.startswith("/profiles/"):
+        serve_static(handler, "frontend/pages/index.html")
+        return True
+
     return False
+
+
+# -------------------------------
+# Helpers
+# -------------------------------
+
+def _last_path_id_or_404(handler, path):
+    last = path.split("/")[-1]
+    if not last.isdigit():
+        send_404(handler)
+        return None
+    return int(last)
 
 
 # -------------------------------
@@ -88,170 +106,146 @@ class ClinicRouter(BaseHTTPRequestHandler):
         add_cors_headers(self)
         self.end_headers()
 
-
     # ---------------------------
     # READ (GET)
     # ---------------------------
     def do_GET(self):
         path = urlparse(self.path).path
 
-        # 1. UI routes first (SPA)
         if handle_ui_routes(self, path):
             return
 
-        # 2. API READ routes
-        # patients
+        # ---------------------------
+        # PATIENTS
+        # ---------------------------
         if path == "/api/patients":
             return get_all_patients(self)
 
         if path.startswith("/api/patients/"):
-            try:
-                patient_id = int(path.split("/")[-1])
-                return get_patient(self, patient_id)
-            except ValueError:
-                return send_404(self)
+            patient_id = _last_path_id_or_404(self, path)
+            if patient_id is None:
+                return
+            return get_patient(self, patient_id)
 
-        # doctors
+        # ---------------------------
+        # DOCTORS
+        # ---------------------------
         if path == "/api/doctors":
             return get_all_doctors(self)
 
         if path.startswith("/api/doctors/"):
-            try:
-                doctor_id = int(path.split("/")[-1])
-                return get_doctor(self, doctor_id)
-            except ValueError:
-                return send_404(self)
+            doctor_id = _last_path_id_or_404(self, path)
+            if doctor_id is None:
+                return
+            return get_doctor(self, doctor_id)
 
-        # appointments
+        # ---------------------------
+        # APPOINTMENTS
+        # ---------------------------
         if path == "/api/appointments":
             return get_all_appointments(self)
 
         if path.startswith("/api/appointments/"):
-            try:
-                appointment_id = int(path.split("/")[-1])
-                return get_appointment(self, appointment_id)
-            except ValueError:
-                return send_404(self)
-
-         # billings
+            appointment_id = _last_path_id_or_404(self, path)
+            if appointment_id is None:
+                return
+            return get_appointment(self, appointment_id)
+            
+            # ---------------------------
+            # BILLINGS
+            # ---------------------------
         if path == "/api/billings":
             return get_all_billings(self)
 
         if path.startswith("/api/billings/"):
-            try:
-                billing_id = int(path.split("/")[-1])
-                return get_billing(self, billing_id)
-            except ValueError:
-                return send_404(self)
+            billing_id = _last_path_id_or_404(self, path)
+            if billing_id is None:
+                return
+            return get_billing(self, billing_id)
+
+
+        # ---------------------------
+        # REPORTS (JOIN)
+        # ---------------------------
+        if path == "/api/reports/clinic-visits":
+            return get_clinic_visit_report(self)
 
         return send_404(self)
-
 
     # ---------------------------
     # CREATE (POST)
     # ---------------------------
     def do_POST(self):
-        # patients
-        if self.path == "/api/patients":
+        path = urlparse(self.path).path
+
+        if path == "/api/patients":
             return create_patient(self)
 
-        # doctors
-        if self.path == "/api/doctors":
+        if path == "/api/doctors":
             return create_doctor(self)
 
-        # appointments
-        if self.path == "/api/appointments":
+        if path == "/api/appointments":
             return create_appointment(self)
 
-        # billings
-        if self.path == "/api/billings":
+        if path == "/api/billings":
             return create_billing(self)
 
-        return send_404(self)
 
+        return send_404(self)
 
     # ---------------------------
     # UPDATE (PUT)
     # ---------------------------
     def do_PUT(self):
-        # patients
-        if self.path.startswith("/api/patients/"):
-            try:
-                patient_id = int(self.path.split("/")[-1])
-                return update_patient(self, patient_id)
-            except ValueError:
-                return send_404(self)
-       
-        # doctors
-        if self.path.startswith("/api/doctors/"):
-            try:
-                doctor_id = int(self.path.split("/")[-1])
-                return update_doctor(self, doctor_id)
-            except ValueError:
-                return send_404(self)
+        path = urlparse(self.path).path
 
-        # appointments
-        if self.path.startswith("/api/appointments/"):
-            try:
-                appointment_id = int(self.path.split("/")[-1])
-                return update_appointment(self, appointment_id)
-            except ValueError:
-                return send_404(self)
+        if path.startswith("/api/patients/"):
+            patient_id = _last_path_id_or_404(self, path)
+            if patient_id is None:
+                return
+            return update_patient(self, patient_id)
 
-         # billings
-        if self.path.startswith("/api/billings/"):
-            try:
-                billing_id = int(self.path.split("/")[-1])
-                return update_billing(self, billing_id)
-            except ValueError:
-                return send_404(self)
-                
+        if path.startswith("/api/doctors/"):
+            doctor_id = _last_path_id_or_404(self, path)
+            if doctor_id is None:
+                return
+            return update_doctor(self, doctor_id)
+
         return send_404(self)
-
 
     # ---------------------------
     # DELETE (DELETE)
     # ---------------------------
     def do_DELETE(self):
-        # patients
-        if self.path.startswith("/api/patients/"):
-            try:
-                patient_id = int(self.path.split("/")[-1])
-                return delete_patient(self, patient_id)
-            except ValueError:
-                return send_404(self)
+        path = urlparse(self.path).path
 
-        # doctors
-        if self.path.startswith("/api/doctors/"):
-            try:
-                doctor_id = int(self.path.split("/")[-1])
-                return delete_doctor(self, doctor_id)
-            except ValueError:
-                return send_404(self)
+        if path.startswith("/api/patients/"):
+            patient_id = _last_path_id_or_404(self, path)
+            if patient_id is None:
+                return
+            return delete_patient(self, patient_id)
 
-        # appointments
-        if self.path.startswith("/api/appointments/"):
-            try:
-                appointment_id = int(self.path.split("/")[-1])
-                return delete_appointment(self, appointment_id)
-            except ValueError:
-                return send_404(self)
+        if path.startswith("/api/doctors/"):
+            doctor_id = _last_path_id_or_404(self, path)
+            if doctor_id is None:
+                return
+            return delete_doctor(self, doctor_id)
 
-        # billings
-        if self.path.startswith("/api/billings/"):
-            try:
-                billing_id = int(self.path.split("/")[-1])
-                return delete_billing(self, billing_id)
-            except ValueError:
-                return send_404(self)
+        if path.startswith("/api/appointments/"):
+            appointment_id = _last_path_id_or_404(self, path)
+            if appointment_id is None:
+                return
+            return delete_appointment(self, appointment_id)
 
-        if not self.path.startswith("/api/"):
-            serve_static(self, "frontend/pages/index.html")
-            return
-                
         return send_404(self)
+
+        if path.startswith("/api/billings/"):
+            billing_id = _last_path_id_or_404(self, path)
+            if billing_id is None:
+                 return
+            return delete_billing(self, billing_id)
 
 
     def log_message(self, format, *args):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"[{timestamp}] [ClinicServer] {format % args}")
+        print(f"[{timestamp}] [Clinic Server] {format % args}")
