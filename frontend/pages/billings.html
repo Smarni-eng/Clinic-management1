@@ -1,158 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-     <!-- Tailwind CSS CDN -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-  body {
-    /* A vibrant, modern mesh gradient */
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); /* Fallback */
-    background: 
+    body {
+      /* A vibrant, modern mesh gradient */
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background:
         radial-gradient(at 0% 0%, rgba(165, 180, 252, 0.5) 0px, transparent 50%),
         radial-gradient(at 100% 0%, rgba(249, 168, 212, 0.5) 0px, transparent 50%),
         radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.5) 0px, transparent 50%),
         radial-gradient(at 0% 100%, rgba(196, 181, 253, 0.5) 0px, transparent 50%);
-    background-color: #f3f4f6;
-    background-attachment: fixed;
-    margin: 0;
-    min-height: 100vh;
-  }
+      background-color: #f3f4f6;
+      background-attachment: fixed;
+      margin: 0;
+      min-height: 100vh;
+    }
 
-  /* Make the cards pop against the new background */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-</style>
+    .glass-card {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+  </style>
 </head>
-<body class="min-h-screen
-             bg-gradient-to-br
-             from-blue-100
-             via-pink-100
-             to-purple-100">
 
- <section class="max-w-6xl mx-auto mb-10 mt-6 px-4">
-  <div class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100
-              border border-white/70
-              rounded-3xl p-8 shadow-lg backdrop-blur-md">
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-pink-100 to-purple-100">
 
-    <h1 class="text-3xl font-bold text-gray-800 mb-1">
-      Billings
-    </h1>
+  <!-- Header -->
+  <section class="max-w-6xl mx-auto mb-10 mt-6 px-4">
+    <div class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100
+                border border-white/70 rounded-3xl p-8
+                shadow-lg backdrop-blur-md">
+      <h1 class="text-3xl font-bold text-gray-800 mb-1">Billings</h1>
+      <p class="text-gray-600">Manage billing records and payment information</p>
+    </div>
+  </section>
 
-    <p class="text-gray-600">
-      Manage billing records and payment information
-    </p>
-
-  </div>
-</section>
-    <a href="/home" data-link
-   class="inline-flex items-center gap-1 px-6 py-2 text-sm font-semibold
-          text-white rounded-full
-          bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
-          hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600
-          transition-all duration-300 shadow-md hover:shadow-lg">
-   ← Back to Home
-    </a>
-
-  </div>
+  <!-- Back Button -->
+  <a href="/home" data-link
+     class="inline-flex items-center gap-1 px-6 py-2 text-sm font-semibold
+            text-white rounded-full
+            bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+            hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600
+            transition-all duration-300 shadow-md hover:shadow-lg">
+    ← Back to Home
+  </a>
 
   <!-- Add / Edit Billing Form -->
   <div class="max-w-6xl mx-auto px-4 mb-8">
-  <div class="bg-gradient-to-br
-            from-blue-50/70
-            via-white/80
-            to-pink-50/70
-            backdrop-blur-lg
-            p-8 rounded-3xl
-            shadow-xl
-            border border-white/60">
-    <h2 class="font-semibold mb-3 text-lg">Add New Billing</h2>
-    <form id="billingForm" class="space-y-3">
-      <input type="text" id="patient_id" placeholder="Patient ID" required class="w-full border rounded px-3 py-2">
-      <input type="text" id="doctor_id" placeholder="Doctor ID" required class="w-full border rounded px-3 py-2">
-      <input type="text" id="amount" placeholder="Amount" required class="w-full border rounded px-3 py-2">
-      <select id="payment_status" required class="w-full border rounded px-3 py-2">
-        <option value="">Select Payment Status</option>
-        <option value="Paid">Paid</option>
-        <option value="Pending">Pending</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-      <select id="payment_method" required class="w-full border rounded px-3 py-2">
-        <option value="">Select Payment Method</option>
-        <option value="Cash">Cash</option>
-        <option value="Card">Card</option>
-        <option value="UPI">UPI</option>
-        <option value="Online">Online</option>
-      </select>
+    <div class="bg-gradient-to-br from-blue-50/70 via-white/80 to-pink-50/70
+                backdrop-blur-lg p-8 rounded-3xl
+                shadow-xl border border-white/60">
 
-      <select id="status" required class="w-full border rounded px-3 py-2">
-        <option value="">Select Status</option>
-        <option value="Paid">Paid</option>
-        <option value="Pending">Pending</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
+      <h2 class="font-semibold mb-3 text-lg">Add New Billing</h2>
 
-      <div class="flex space-x-2">
-        <button type="submit" id="submitBtn"
-          class="flex-1 py-2 rounded-full text-white font-semibold
-           bg-gradient-to-r from-blue-500 to-purple-500
-           hover:from-blue-600 hover:to-purple-600 transition shadow">
-          Add Billing
-        </button>
+      <form id="billingForm" class="space-y-3">
+        <input type="text" id="patient_id" placeholder="Patient ID" required
+               class="w-full border rounded px-3 py-2">
 
-        <button type="button" id="cancelBtn"
-          class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
-          Cancel
-        </button>
-      </div>
-    </form>
+        <input type="text" id="doctor_id" placeholder="Doctor ID" required
+               class="w-full border rounded px-3 py-2">
+
+        <input type="text" id="amount" placeholder="Amount" required
+               class="w-full border rounded px-3 py-2">
+
+        <select id="payment_status" required
+                class="w-full border rounded px-3 py-2">
+          <option value="">Select Payment Status</option>
+          <option value="Paid">Paid</option>
+          <option value="Pending">Pending</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+
+        <select id="payment_method" required
+                class="w-full border rounded px-3 py-2">
+          <option value="">Select Payment Method</option>
+          <option value="Cash">Cash</option>
+          <option value="Card">Card</option>
+          <option value="UPI">UPI</option>
+          <option value="Online">Online</option>
+        </select>
+
+        
+        <div class="flex space-x-2">
+          <button type="submit" id="submitBtn"
+                  class="flex-1 py-2 rounded-full text-white font-semibold
+                         bg-gradient-to-r from-blue-500 to-purple-500
+                         hover:from-blue-600 hover:to-purple-600
+                         transition shadow">
+            Add Billing
+          </button>
+
+          <button type="button" id="cancelBtn"
+                  class="flex-1 bg-gray-400 hover:bg-gray-500
+                         text-white py-2 rounded hidden">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
-  </div>   
 
   <!-- Billing Table -->
   <div class="max-w-6xl mx-auto px-4">
-  <div class="bg-white/80 backdrop-blur-md
-              p-6 rounded-2xl shadow-lg border border-white/70">
-    <h2 class="font-semibold mb-4 text-lg">All Billings</h2>
+    <div class="bg-white/80 backdrop-blur-md p-6
+                rounded-2xl shadow-lg border border-white/70">
 
-    <!-- Loading Spinner -->
-    <div id="loadingSpinner" class="text-center py-4">
-      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
-    </div>
+      <h2 class="font-semibold mb-4 text-lg">All Billings</h2>
 
-    <!-- Billings Table Container -->
-    <div id="billingsTableContainer" class="hidden overflow-x-auto">
-      <table class="min-w-full text-left border">
-        <thead class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100">
-          <tr>
-            <th class="px-3 py-2"> Bill ID</th>
-            <th class="px-3 py-2">Patient ID</th>
-            <th class="px-3 py-2">Doctor ID</th>
-            <th class="px-3 py-2">Amount</th>
-            <th class="px-3 py-2">Payment Status</th>
-            <th class="px-3 py-2">Payment Method</th>
-            <th class="px-3 py-2">Status</th>
-            <th class="px-3 py-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="billingRecordsTableBody" class="divide-y hover:[&_tr]:bg-blue-50 transition">
+      <!-- Loading Spinner -->
+      <div id="loadingSpinner" class="text-center py-4">
+        <div class="animate-spin rounded-full h-6 w-6
+                    border-b-2 border-blue-500 mx-auto"></div>
+      </div>
+
+      <!-- Table -->
+      <div id="billingsTableContainer" class="hidden overflow-x-auto">
+        <table class="min-w-full text-left border">
+          <thead class="bg-gradient-to-r from-blue-100 via-cyan-100 to-purple-100">
+            <tr>
+              <th class="px-3 py-2">Bill ID</th>
+              <th class="px-3 py-2">Patient ID</th>
+              <th class="px-3 py-2">Doctor ID</th>
+              <th class="px-3 py-2">Amount</th>
+              <th class="px-3 py-2">Payment Status</th>
+              <th class="px-3 py-2">Payment Method</th>
+              <th class="px-3 py-2">Status</th>
+              <th class="px-3 py-2">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody id="billingRecordsTableBody"
+                 class="divide-y hover:[&_tr]:bg-blue-50 transition">
           </tbody>
-      </table>
+        </table>
 
-      <p id="noBilling" class="text-center text-gray-500 mt-3 hidden">
-        No billing records found. Add one using the form above.
-      </p>
+        <p id="noBilling" class="text-center text-gray-500 mt-3 hidden">
+          No billing records found. Add one using the form above.
+        </p>
+      </div>
     </div>
   </div>
 
   <!-- Alert container -->
-  <div id="alertContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
-</div>
+  <div id="alertContainer"
+       class="fixed top-4 right-4 space-y-2 z-50"></div>
+
 </body>
 </html>

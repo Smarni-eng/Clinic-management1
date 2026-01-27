@@ -86,7 +86,7 @@ export async function initProfileController(patientId) {
     show("basicDetails", true);
 
     /* 2️⃣ Load clinic visit JOIN report */
-    const repRes = await fetch(`/api/reports/clinic-visits`);
+    const repRes = await fetch(`/reports/clinic-visits`);
     if (!repRes.ok) throw new Error("Visit report failed");
     const all = await repRes.json();
 

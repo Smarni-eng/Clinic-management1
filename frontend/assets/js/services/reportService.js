@@ -3,7 +3,7 @@
 const API_URL = window.ENV.API_BASE_URL; 
 // example: /api (base URL)
 
-const REPORT_URL = "/api/reports/clinic-visits"; 
+const REPORT_URL = "/reports/clinic-visits"; 
 // JOIN report endpoint for clinic management
 
 async function safeJson(res) {

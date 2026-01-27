@@ -53,6 +53,7 @@ FRONTEND_ROUTES = {
     "/profiles",
 }
 
+
 def handle_ui_routes(handler, path):
     if path in FRONTEND_ROUTES:
         serve_static(handler, "frontend/pages/index.html")
@@ -115,9 +116,7 @@ class ClinicRouter(BaseHTTPRequestHandler):
         if handle_ui_routes(self, path):
             return
 
-        # ---------------------------
         # PATIENTS
-        # ---------------------------
         if path == "/api/patients":
             return get_all_patients(self)
 
@@ -127,9 +126,7 @@ class ClinicRouter(BaseHTTPRequestHandler):
                 return
             return get_patient(self, patient_id)
 
-        # ---------------------------
         # DOCTORS
-        # ---------------------------
         if path == "/api/doctors":
             return get_all_doctors(self)
 
@@ -139,9 +136,7 @@ class ClinicRouter(BaseHTTPRequestHandler):
                 return
             return get_doctor(self, doctor_id)
 
-        # ---------------------------
         # APPOINTMENTS
-        # ---------------------------
         if path == "/api/appointments":
             return get_all_appointments(self)
 
@@ -150,10 +145,8 @@ class ClinicRouter(BaseHTTPRequestHandler):
             if appointment_id is None:
                 return
             return get_appointment(self, appointment_id)
-            
-            # ---------------------------
-            # BILLINGS
-            # ---------------------------
+
+        # BILLINGS
         if path == "/api/billings":
             return get_all_billings(self)
 
@@ -163,10 +156,7 @@ class ClinicRouter(BaseHTTPRequestHandler):
                 return
             return get_billing(self, billing_id)
 
-
-        # ---------------------------
         # REPORTS (JOIN)
-        # ---------------------------
         if path == "/api/reports/clinic-visits":
             return get_clinic_visit_report(self)
 
@@ -189,7 +179,6 @@ class ClinicRouter(BaseHTTPRequestHandler):
 
         if path == "/api/billings":
             return create_billing(self)
-
 
         return send_404(self)
 
@@ -237,14 +226,13 @@ class ClinicRouter(BaseHTTPRequestHandler):
                 return
             return delete_appointment(self, appointment_id)
 
-        return send_404(self)
-
         if path.startswith("/api/billings/"):
             billing_id = _last_path_id_or_404(self, path)
             if billing_id is None:
-                 return
+                return
             return delete_billing(self, billing_id)
 
+        return send_404(self)
 
     def log_message(self, format, *args):
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
