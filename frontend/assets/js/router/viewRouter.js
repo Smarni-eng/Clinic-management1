@@ -68,7 +68,7 @@ export async function router() {
   // --------------------
   // REPORTS (JOIN VIEW)
   // --------------------
-  if (path === "/reports/visits") {
+  if (path === "/reports/clinic-visits") {
     await loadView("/frontend/pages/report_visits.html");
     const mod = await import("../controllers/reportController.js");
     mod.initClinicVisitReportController(); // you can rename later
