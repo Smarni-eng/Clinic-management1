@@ -1,6 +1,6 @@
 // frontend/assets/js/services/reportService.js
 
-const API_URL = window.ENV.API_BASE_URL; 
+const API_URL = window.ENV.API_REPORTS_URL; 
 // example: /api (base URL)
 
 const REPORT_URL = "/reports/clinic-visits"; 
@@ -16,7 +16,7 @@ async function safeJson(res) {
 
 // Fetch JOIN report (appointments + patient + doctor + billing)
 export async function apiGetClinicVisitReport() {
-  const res = await fetch(REPORT_URL);
+  const res = await fetch("/api/reports/clinic-visits");
   if (!res.ok) return [];
   return safeJson(res);
 }
