@@ -29,10 +29,10 @@ def db_create(data):
     cur = conn.execute(
         """
         INSERT INTO billings
-        (patient_id, doctor_id, amount, payment_status, payment_method,  created_at)
-        VALUES (?, ?, ?, ?, ?, ?)
+        (appointment_id, patient_id, doctor_id, amount, payment_status, payment_method,  created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
         """,
-        (data["patient_id"], data["doctor_id"], data["amount"], data["payment_status"], data["payment_method"], now))
+        (data["appointment_id"], data["patient_id"], data["doctor_id"], data["amount"], data["payment_status"], data["payment_method"], now))
     conn.commit()
     new_id = cur.lastrowid
     conn.close()
@@ -46,10 +46,10 @@ def db_update(billing_id, data):
     conn.execute(
         """
         UPDATE billings
-        SET patient_id=?, doctor_id=?, amount=?, payment_status=?, payment_method=?, updated_at=?
+        SET appointment_id=?, patient_id=?, doctor_id=?, amount=?, payment_status=?, payment_method=?, updated_at=?
         WHERE id=?
         """,
-        (data["patient_id"], data["doctor_id"], data["amount"], data["payment_status"], data["payment_method"], now, billing_id))
+        (data["appointment_id"], data["patient_id"], data["doctor_id"], data["amount"], data["payment_status"], data["payment_method"], now, billing_id))
     conn.commit()
     conn.close()
     return db_get_one(billing_id)

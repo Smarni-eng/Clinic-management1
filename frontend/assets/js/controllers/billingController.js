@@ -1,9 +1,9 @@
-import { 
-    apiGetAll, 
-    apiGetOne, 
-    apiCreate, 
-    apiUpdate, 
-    apiDelete 
+import {
+  apiGetAll,
+  apiGetOne,
+  apiCreate,
+  apiUpdate,
+  apiDelete
 } from "../services/billingService.js";
 
 import { showAlert } from "../components/Alert.js";
@@ -13,21 +13,81 @@ import { resetForm, fillForm } from "../components/BillingForm.js";
 import { setState, getState } from "../state/store.js";
 import { $ } from "../utils/dom.js";
 
+/* ✅ NEW: load appointments */
+async function loadAppointments() {
+  try {
+    const res = await fetch("/api/appointments");
+    const appointments = await res.json();
+
+    const select = $("appointment_id");
+    select.innerHTML = `<option value="">Select Appointment</option>`;
+
+    appointments.forEach((appt) => {
+      const option = document.createElement("option");
+      option.value = appt.id;
+
+      // show meaningful text in dropdown
+      option.textContent = `#${appt.id} | Patient ${appt.patient_id} | Doctor ${appt.doctor_id} | ${appt.appointment_date}`;
+      option.dataset.patientId = appt.patient_id;
+      option.dataset.doctorId = appt.doctor_id;
+
+      select.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Failed to load appointments", err);
+    showAlert("Failed to load appointments!");
+  }
+}
+
+/* ✅ NEW: when appointment changes auto-fill fields */
+function setupAppointmentListener() {
+  $("appointment_id").addEventListener("change", () => {
+    const selectedOption = $("appointment_id").selectedOptions[0];
+
+    if (!selectedOption || !selectedOption.value) {
+      $("patient_id").value = "";
+      $("doctor_id").value = "";
+      return;
+    }
+
+    $("patient_id").value = selectedOption.dataset.patientId || "";
+    $("doctor_id").value = selectedOption.dataset.doctorId || "";
+
+    // If you want amount auto-fill, you can set default amount here
+    // Example:
+    // $("amount").value = "500";
+  });
+}
+
 // Setup event listeners and load initial data
 export function initBillingController() {
   loadBillings();
+
+  // ✅ load appointments dropdown
+  loadAppointments();
+  setupAppointmentListener();
 
   // Handle Form Submissions
   $("billingForm").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const data = {
-      patient_id: $("patient_id").value.trim(), 
-      doctor_id: $("doctor_id").value.trim(), 
-      amount: $("amount").value.trim(),
-      payment_status: $("payment_status").value.trim(),    
-      payment_method: $("payment_method").value.trim(),    
+      appointment_id: $("appointment_id").value.trim(),
+      patient_id: $("patient_id").value.trim(),
+      doctor_id: $("doctor_id").value.trim(),
+
+      // ✅ convert amount properly to number
+      amount: Number($("amount").value),
+
+      payment_status: $("payment_status").value.trim(),
+      payment_method: $("payment_method").value.trim(),
     };
+
+    // ✅ prevent empty amount
+    if (!data.amount || data.amount <= 0) {
+      showAlert("Amount must be greater than 0!");
+      return;
+    }
 
     const { editingId } = getState();
 
@@ -42,7 +102,6 @@ export function initBillingController() {
     resetForm();
   });
 }
-
 
 // Fetch all billing data from the API and update the user interface
 export async function loadBillings() {
@@ -61,7 +120,6 @@ export async function loadBillings() {
   table.style.display = "block";
 }
 
-
 // Create a new billing
 export async function createNewBilling(data) {
   const res = await apiCreate(data);
@@ -78,7 +136,6 @@ export async function createNewBilling(data) {
 export async function editBilling(id) {
   const billing = await apiGetOne(id);
 
-  // ✅ Check if billing exists before proceeding
   if (!billing) {
     showAlert("Billing not found!");
     return;

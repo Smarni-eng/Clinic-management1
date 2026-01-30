@@ -4,18 +4,23 @@ export function renderClinicVisitReportTable(rows) {
   const body = $("reportTableBody");
   const empty = $("noRows");
 
+  if (!body) return;
+
   body.innerHTML = "";
 
   if (!rows || rows.length === 0) {
-    empty.classList.remove("hidden");
+    empty?.classList.remove("hidden");
     return;
   }
 
-  empty.classList.add("hidden");
+  empty?.classList.add("hidden");
 
-  rows.forEach(r => {
+  rows.forEach((r) => {
     const tr = document.createElement("tr");
+
     tr.innerHTML = `
+      <td class="px-3 py-2 border">${r.appointment_id ?? ""}</td>
+
       <td class="px-3 py-2 border">
         ${r.patient_name ?? ""}
         <span class="text-xs text-gray-500">(ID: ${r.patient_id ?? ""})</span>
@@ -27,21 +32,14 @@ export function renderClinicVisitReportTable(rows) {
       </td>
 
       <td class="px-3 py-2 border">
-        ${r.appointment_date ?? ""}
-        <div class="text-xs text-gray-500">
-          ${r.appointment_time ?? ""}
-        </div>
+        ${r.visit_date ?? r.appointment_date ?? ""}
       </td>
 
       <td class="px-3 py-2 border">
-        ₹${r.amount ?? ""}
-        <div class="text-xs ${
-          r.payment_status === "Paid" ? "text-green-600" : "text-red-600"
-        }">
-          ${r.payment_status ?? ""}
-        </div>
+        ₹${r.bill_amount ?? 0}
       </td>
     `;
+
     body.appendChild(tr);
   });
 }

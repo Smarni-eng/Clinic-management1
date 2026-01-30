@@ -15,6 +15,7 @@ export function resetForm() {
 // Populates the input form fields with data from a selected doctor object (for editing)
 export function fillForm(billing) {
   // Fill each input field with the corresponding property from the doctor data
+  $("appointment_id").value = billing.appointment_id; 
   $("patient_id").value = billing.patient_id;
   $("doctor_id").value = billing.doctor_id;
   $("amount").value = billing.amount;
