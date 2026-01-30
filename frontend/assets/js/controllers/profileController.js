@@ -1,5 +1,5 @@
 import { $ } from "../utils/dom.js";
-import { exportProfileToCSV, exportProfileToPDF } from "../utils/exportTools.js";
+import { exportToCSV, exportToPDF } from "../utils/exportTools.js";
 
 function show(id, yes) {
   const el = $(id);
@@ -47,7 +47,7 @@ export async function initProfileController(patientId) {
   // Export buttons
   $("profileExportCsvBtn")?.addEventListener("click", () => {
     if (!patient) return;
-    exportProfileToCSV(
+    exportToCSV(
       `patient_${patient.id}_profile.csv`,
       patient,
       visits,
@@ -57,7 +57,7 @@ export async function initProfileController(patientId) {
 
   $("profileExportPdfBtn")?.addEventListener("click", () => {
     if (!patient) return;
-    exportProfileToPDF(
+    exportToPDF(
       `Patient ${patient.id} - Visit Profile`,
       patient,
       visits,

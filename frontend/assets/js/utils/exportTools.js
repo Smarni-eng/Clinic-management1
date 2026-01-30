@@ -81,7 +81,7 @@ function buildProfileCSV(entity, entityFields, rows, rowColumns) {
   ].join("\n");
 }
 
-export function exportProfileToCSV(filename, entity, rows, config) {
+export function exportToCSV(filename, entity, rows, config) {
   const csv = buildProfileCSV(
     entity,
     config?.entityFields || [],
@@ -93,7 +93,7 @@ export function exportProfileToCSV(filename, entity, rows, config) {
   downloadBlob(filename, blob);
 }
 
-export function exportProfileToPDF(title, entity, rows, config) {
+export function exportToPDF(title, entity, rows, config) {
   const html = buildProfileHTML(
     title,
     entity,
