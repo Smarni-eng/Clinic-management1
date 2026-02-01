@@ -46,11 +46,13 @@
         }
 
         /* Make the cards pop against the new background */
-        .glass-card {
+        .glass-card 
+        {
             background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px) brightness(100%);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
     </style>
     <style>

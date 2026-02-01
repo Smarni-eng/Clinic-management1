@@ -8,21 +8,28 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #dbeafe 0%, #fce7f3 50%, #ddd6fe 100%);
-      background-attachment: fixed;
-    }
+  body {
+    /* The image is now the primary layer */
+    background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
 
-    .glass-card {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.08);
-    }
-  </style>
+  /* This ensures your cards stay readable over a clear image */
+  .glass-card, 
+  .bg-white\/80, 
+  .bg-gradient-to-br {
+    backdrop-filter: blur(12px) brightness(100%);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  }
+</style>
 </head>
 
 <body>
