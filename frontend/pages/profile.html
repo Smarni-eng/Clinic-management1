@@ -1,117 +1,122 @@
-<div class="max-w-7xl mx-auto p-6">
+<!-- FULL PAGE WRAPPER -->
+<div class="w-full min-h-screen bg-gray-50">
 
-  <!-- Header -->
-  <div class="flex items-center justify-between mb-8">
-    <div>
-      <h1 class="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
-        Patient Profile
-      </h1>
-      <p class="text-sm text-gray-600">Personal details and visit history</p>
-    </div>
-
-    <a href="/patients" data-link
-      class="inline-flex items-center gap-2 px-6 py-2 rounded-lg
-             text-white font-semibold shadow-md
-             bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
-             hover:scale-105 transition">
-      ← Back to Patients
-    </a>
-  </div>
-
-  <!-- MAIN CONTENT -->
-<div class="grid grid-cols-[420px_1fr] gap-8 items-start w-full">
-
-  <!-- LEFT: Patient Details -->
-  <div class="bg-white rounded-2xl shadow border overflow-hidden w-full">
-    <div class="p-6 border-b bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
-      <h2 class="font-bold text-xl">Patient Details</h2>
-      <p class="text-sm text-white/90">Basic information</p>
-    </div>
-
-    <div class="p-6 space-y-5">
-      <div class="border rounded-xl p-4 bg-gray-50">
-        <div class="text-xs text-gray-500">Patient ID</div>
-        <div class="font-bold text-lg" id="patientId">—</div>
-      </div>
-
-      <div class="border rounded-xl p-4 bg-gray-50">
-        <div class="text-xs text-gray-500">Name</div>
-        <div class="font-bold text-lg" id="patientName">—</div>
-      </div>
-
-      <div class="border rounded-xl p-4 bg-gray-50">
-        <div class="text-xs text-gray-500">Age</div>
-        <div class="font-bold text-lg" id="patientAge">—</div>
-      </div>
-
-      <div class="border rounded-xl p-4 bg-gray-50">
-        <div class="text-xs text-gray-500">Phone</div>
-        <div class="font-bold text-lg" id="patientPhone">—</div>
-      </div>
-
-      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
-        <div class="font-semibold text-blue-700">Total Visits</div>
-        <div class="text-blue-900 font-extrabold text-lg">
-          <span id="totalVisits">0</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- RIGHT: Visit History -->
-  <div class="bg-white rounded-2xl shadow border overflow-hidden w-full min-w-0">
+  <!-- CONTENT AREA -->
+  <div class="w-full px-8 py-6">
 
     <!-- Header -->
-    <div class="p-6 border-b flex items-start justify-between gap-6
-                bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
-
+    <div class="flex items-center justify-between mb-10">
       <div>
-        <h2 class="font-bold text-xl">Visit History</h2>
-        <p class="text-sm text-white/90">
-          Doctor • Specialty • Date • Fees • Payment Status
+        <h1 class="text-4xl font-extrabold bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-clip-text text-transparent">
+          Patient Profile
+        </h1>
+        <p class="text-sm text-gray-600 mt-1">
+          Personal details and visit history
         </p>
       </div>
 
-      <!-- LIGHT export buttons -->
-      <div class="flex gap-3 shrink-0">
-        <button id="exportCsvBtn"
-          class="px-4 py-2 text-sm font-semibold rounded-lg
-                 bg-white/90 text-indigo-700 border border-white/60
-                 hover:bg-white transition shadow-sm">
-          Export CSV
-        </button>
+      <a href="/patients" data-link
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-xl
+               text-white font-semibold shadow-lg
+               bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500
+               hover:scale-105 transition">
+        ← Back to Patients
+      </a>
+    </div>
 
-        <button id="exportPdfBtn"
-          class="px-4 py-2 text-sm font-semibold rounded-lg
-                 bg-white/90 text-purple-700 border border-white/60
-                 hover:bg-white transition shadow-sm">
-          Export PDF
-        </button>
+    <!-- MAIN CONTENT -->
+    <div class="grid grid-cols-1 xl:grid-cols-6 gap-10 items-start w-full">
+
+      <!-- LEFT: Patient Details -->
+      <div class="xl:col-span-2 bg-white rounded-2xl shadow border w-full">
+
+        <div class="p-6 border-b
+                    bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
+          <h2 class="font-bold text-xl">Patient Details</h2>
+          <p class="text-sm text-white/90">Basic information</p>
+        </div>
+
+        <div class="p-6 space-y-5">
+          <div class="border rounded-xl p-4 bg-gray-50">
+            <div class="text-xs text-gray-500">Patient ID</div>
+            <div class="font-bold text-lg" id="patientId">—</div>
+          </div>
+
+          <div class="border rounded-xl p-4 bg-gray-50">
+            <div class="text-xs text-gray-500">Name</div>
+            <div class="font-bold text-lg" id="patientName">—</div>
+          </div>
+
+          <div class="border rounded-xl p-4 bg-gray-50">
+            <div class="text-xs text-gray-500">Age</div>
+            <div class="font-bold text-lg" id="patientAge">—</div>
+          </div>
+
+          <div class="border rounded-xl p-4 bg-gray-50">
+            <div class="text-xs text-gray-500">Phone</div>
+            <div class="font-bold text-lg" id="patientPhone">—</div>
+          </div>
+
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-sm">
+            <div class="font-semibold text-blue-700">Total Visits</div>
+            <div class="text-blue-900 font-extrabold text-lg">
+              <span id="totalVisits">0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Visit History -->
+      <div class="xl:col-span-4 bg-white rounded-2xl shadow border w-full">
+
+        <div class="p-6 border-b flex items-start justify-between gap-6
+                    bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
+
+          <div>
+            <h2 class="font-bold text-xl">Visit History</h2>
+            <p class="text-sm text-white/90">
+              Doctor • Specialty • Date • Fees • Payment Status
+            </p>
+          </div>
+
+          <div class="flex gap-3 shrink-0">
+            <button
+              class="px-4 py-2 text-sm font-semibold rounded-lg
+                     bg-white/90 text-indigo-700 border border-white/60
+                     hover:bg-white transition shadow-sm">
+              Export CSV
+            </button>
+
+            <button
+              class="px-4 py-2 text-sm font-semibold rounded-lg
+                     bg-white/90 text-purple-700 border border-white/60
+                     hover:bg-white transition shadow-sm">
+              Export PDF
+            </button>
+          </div>
+        </div>
+
+        <div class="p-6 overflow-x-auto">
+          <table class="w-full border text-left table-auto">
+            <thead class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
+              <tr>
+                <th class="px-4 py-3">Visit ID</th>
+                <th class="px-4 py-3">Doctor</th>
+                <th class="px-4 py-3">Speciality</th>
+                <th class="px-4 py-3">Date</th>
+                <th class="px-4 py-3">Fees</th>
+                <th class="px-4 py-3">Status</th>
+              </tr>
+            </thead>
+            <tbody id="joinTableBody"></tbody>
+          </table>
+
+          <p id="noVisits" class="hidden text-center text-gray-500 mt-4">
+            No visits found for this patient.
+          </p>
+        </div>
+
       </div>
     </div>
-
-    <!-- Table -->
-    <div class="p-6">
-      <table class="w-full border text-left table-auto">
-        <thead class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white">
-          <tr>
-            <th class="px-4 py-3 font-semibold">Visit ID</th>
-            <th class="px-4 py-3 font-semibold">Doctor</th>
-            <th class="px-4 py-3 font-semibold">Speciality</th>
-            <th class="px-4 py-3 font-semibold">Date</th>
-            <th class="px-4 py-3 font-semibold">Fees</th>
-            <th class="px-4 py-3 font-semibold">Status</th>
-          </tr>
-        </thead>
-
-        <tbody id="joinTableBody"></tbody>
-      </table>
-
-      <p id="noVisits" class="hidden text-center text-gray-500 mt-4">
-        No visits found for this patient.
-      </p>
-    </div>
-
   </div>
-</div>
 </div>
