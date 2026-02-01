@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patients</title>
-
-    <!-- Tailwind CDN -->
+    <title>Document</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
     <script>
         tailwind.config = {
             theme: {
@@ -33,67 +30,30 @@
 
     <style>
         body {
-            margin: 0;
-            min-height: 100vh;
+            /* Logic: Layering original gradients over a medical corridor image */
+            background: 
+                radial-gradient(at 0% 0%, rgba(165, 180, 252, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(249, 168, 212, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.5) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(196, 181, 253, 0.5) 0px, transparent 50%),
+                url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2000');
             background-color: #f3f4f6;
-            overflow-x: hidden;
-        }
-
-        /* Corridor background layer */
-        .medical-corridor-bg {
-            position: fixed;
-            inset: 0;
-            z-index: -20;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        /* Left + Right corridor strips */
-        .medical-corridor-bg::before,
-        .medical-corridor-bg::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 22%;
-            height: 100%;
             background-size: cover;
             background-position: center;
-            opacity: 0.35;
-            filter: blur(0.3px);
+            background-attachment: fixed;
+            margin: 0;
+            min-height: 100vh;
         }
 
-        /* LEFT corridor image */
-        .medical-corridor-bg::before {
-            left: 0;
-            background-image: url("https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80");
-        }
-
-        /* RIGHT corridor image */
-        .medical-corridor-bg::after {
-            right: 0;
-            background-image: url("https://images.unsplash.com/photo-1580281658628-9a8a57a6f8c5?auto=format&fit=crop&w=800&q=80");
-        }
-
-        /* Center soft overlay so content remains readable */
-        .center-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: -10;
-            background:
-                radial-gradient(circle at top left, rgba(165, 180, 252, 0.35), transparent 55%),
-                radial-gradient(circle at top right, rgba(249, 168, 212, 0.35), transparent 55%),
-                radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.35), transparent 55%),
-                radial-gradient(circle at bottom left, rgba(196, 181, 253, 0.35), transparent 55%);
-        }
-
-        /* Glass card effect */
+        /* Make the cards pop against the new background */
         .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
-
+    </style>
+    <style>
         @keyframes slideInRight {
             0% {
                 opacity: 0;
@@ -129,29 +89,13 @@
         .fade-out {
             animation: fadeOut 0.5s ease forwards;
         }
-
-        /* Responsive corridor width */
-        @media (max-width: 900px) {
-            .medical-corridor-bg::before,
-            .medical-corridor-bg::after {
-                width: 0;
-                opacity: 0;
-            }
-        }
     </style>
 </head>
-
 <body class="min-h-screen">
-
-<!-- ✅ Corridor Background -->
-<div class="medical-corridor-bg"></div>
-<div class="center-overlay"></div>
 
 <div id="patientPopup" class="fixed top-24 right-6 z-50 pointer-events-none">
     <div class="pop-in bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/60 p-6 text-center">
-        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=300&q=80"
-             alt="Male Doctor"
-             class="w-32 h-32 mx-auto mb-4 rounded-full object-cover shadow-lg" />
+        <img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54" alt="Male Doctor" class="w-32 h-32 mx-auto mb-4 rounded-full object-cover shadow-lg" />
         <h3 class="text-xl font-semibold text-gray-800">Patient Management</h3>
         <p class="text-sm text-gray-600">Caring for patients made simple 💙</p>
     </div>
@@ -169,21 +113,15 @@
         <div class="flex items-center gap-4">
             <label class="relative cursor-pointer">
                 <input type="file" id="patientImage" accept="image/*" class="hidden" />
-                <img id="imagePreview"
-                     src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
-                     class="w-12 h-12 rounded-full object-cover border-2 border-blue-500 shadow hover:opacity-90 hover:ring-2 hover:ring-indigo-400 transition"
-                     alt="Upload Patient"
-                     title="Upload Patient Photo" />
+                <img id="imagePreview" src="https://cdn-icons-png.flaticon.com/512/847/847969.png" class="w-12 h-12 rounded-full object-cover border-2 border-blue-500 shadow hover:opacity-90 hover:ring-2 hover:ring-indigo-400 transition" alt="Upload Patient" title="Upload Patient Photo" />
             </label>
-
-            <a href="/home"
-               class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:scale-105 transition-all shadow-md">
+            <a href="/home" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 hover:scale-105 transition-all shadow-md">
                 ← Back to Home
             </a>
         </div>
     </div>
 
-    <div class="glass-card p-6 rounded-2xl shadow-lg">
+    <div class="bg-gradient-to-br from-white via-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg border border-white/70">
         <h2 class="font-semibold mb-3 text-lg">Add New Patient</h2>
         <form id="patientForm" class="space-y-3">
             <input type="text" id="name" placeholder="Name" required class="w-full border rounded px-3 py-2">
@@ -195,13 +133,10 @@
             <input type="text" id="doctor" placeholder="Doctor" required class="w-full border rounded px-3 py-2">
 
             <div class="flex space-x-2">
-                <button id="submitBtn" type="submit"
-                        class="flex-1 py-2 rounded-full text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition shadow">
+                <button id="submitBtn" type="submit" class="flex-1 py-2 rounded-full text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 transition shadow">
                     Add Patient
                 </button>
-
-                <button type="button" id="cancelBtn"
-                        class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
+                <button type="button" id="cancelBtn" class="flex-1 bg-gray-400 hover:bg-gray-500 text-white py-2 rounded hidden">
                     Cancel
                 </button>
             </div>
@@ -210,7 +145,7 @@
 </div>
 
 <div class="max-w-6xl mx-auto px-4 mt-8 animate-fade-in">
-    <div class="glass-card rounded-3xl shadow-xl overflow-hidden">
+    <div class="glass-card rounded-3xl shadow-xl border border-white/60 overflow-hidden">
         <div class="px-6 py-4 border-b border-white/50">
             <h2 class="text-xl font-semibold text-gray-800">All Patients</h2>
             <p class="text-sm text-gray-500">View, edit and manage patient records</p>
@@ -239,7 +174,6 @@
                 <tbody id="patientsTableBody" class="divide-y divide-gray-200 [&>tr]:animate-slide-up [&>tr:hover]:bg-blue-50">
                 </tbody>
             </table>
-
             <p id="noPatients" class="text-center text-gray-500 py-6 hidden">
                 No patients found. Add one using the form above.
             </p>
@@ -261,13 +195,14 @@
 
         imageInput.addEventListener("change", function () {
             const file = this.files[0];
-            if (!file) return;
-
+            if (!file) {
+                console.log("No file selected");
+                return;
+            }
             if (!file.type.startsWith("image/")) {
                 alert("Please select an image file");
                 return;
             }
-
             const reader = new FileReader();
             reader.onload = function (e) {
                 imagePreview.src = e.target.result;
@@ -283,7 +218,9 @@
         setTimeout(() => {
             if (popup && popup.firstElementChild) {
                 popup.firstElementChild.classList.add("fade-out");
-                setTimeout(() => popup.remove(), 500);
+                setTimeout(() => {
+                    popup.remove();
+                }, 500);
             }
         }, 2500);
     });

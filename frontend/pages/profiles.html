@@ -1,101 +1,134 @@
-<div class="max-w-5xl mx-auto p-6">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patient Directory</title>
 
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-3xl font-bold">Patient Directory</h1>
-    <a href="/home" data-link class="inline-flex items-center gap-2 px-4 py-2 text-sm
-         border border-gray-300 rounded-md
-         text-gray-700 bg-white
-         hover:bg-gray-50 hover:border-gray-400
-         transition">
-      ← Back to Home
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: #f5f5f5;
+    }
+
+    /* Gradient button style */
+    .btn-gradient {
+      background: linear-gradient(to right, #3b82f6, #6366f1, #a855f7);
+      color: white;
+      font-weight: 600;
+      border-radius: 12px;
+      padding: 10px 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: 0.25s ease;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .btn-gradient:hover {
+      transform: scale(1.05);
+      filter: brightness(1.05);
+    }
+
+    /* Normal outline button */
+    .btn-outline {
+      background: white;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-weight: 600;
+      transition: 0.25s ease;
+    }
+
+    .btn-outline:hover {
+      background: #f3f4f6;
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+
+<body>
+
+ 
+
+  <!-- Main Section -->
+  <section class="max-w-6xl mx-auto px-4 py-14">
+
+    <!-- Title + Back button -->
+    <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
+      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">
+        Patient Directory
+      </h1>
+
+      <a href="/" class="btn-gradient px-8 py-3 rounded-full">
+     ← Back to Home
     </a>
-  </div>
+    </div>
 
-  <!-- Search + Sorting + Export -->
-  <div class="bg-white p-5 rounded shadow mb-6">
-    <div class="flex flex-col gap-4">
+    <!-- Overlay box (controls area) -->
+    <div class="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-md p-5
+                flex flex-wrap items-center justify-center gap-4 mb-10">
 
-      <div class="flex flex-col lg:flex-row lg:items-center gap-3">
+      <!-- Search -->
+      <div class="flex items-center gap-2 border border-gray-300 rounded-xl px-4 py-2 bg-white">
+        <span class="text-gray-600 text-lg">🔍</span>
+        <input id="searchInput" type="text" placeholder="Search..."
+               class="outline-none w-[200px] text-gray-700" />
+      </div>
 
-        <!-- Search -->
-        <div class="w-full lg:w-80 relative">
-          <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-          <input id="searchInput" type="text"
-            placeholder="Search by name / phone / age..."
-            class="w-full h-10 border rounded pl-9 pr-3 text-sm
-                   focus:outline-none focus:ring-2 focus:ring-blue-200" />
-        </div>
+      <!-- Sort -->
+      <select id="sortBy" class="border border-gray-300 rounded-xl px-4 py-2 bg-white font-semibold">
+        <option value="id">Sort: Patient ID</option>
+        <option value="name">Sort: Name</option>
+        <option value="age">Sort: Age</option>
+      </select>
 
-        <!-- Sort -->
-        <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+      <!-- Order -->
+      <select id="sortOrder" class="border border-gray-300 rounded-xl px-4 py-2 bg-white font-semibold">
+        <option value="asc">Asc ↑</option>
+        <option value="desc">Desc ↓</option>
+      </select>
 
-          <div class="relative w-full sm:w-48">
-            <i class="fa-solid fa-arrow-down-a-z absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-            <select id="sortBy" class="w-full h-10 border rounded pl-9 pr-3 text-sm bg-white">
-              <option value="id">Sort: Patient ID</option>
-              <option value="name">Sort: Name</option>
-              <option value="age">Sort: Age</option>
-            </select>
-          </div>
+      <!-- Export CSV -->
+      <button id="exportCsvBtn" class="btn-gradient min-w-[120px]">
+        📄 CSV
+      </button>
 
-          <div class="relative w-full sm:w-32">
-            <i class="fa-solid fa-up-down absolute left-3 top-1/2 -translate-y-1/2 text-gray-600 text-sm"></i>
-            <select id="sortDir" class="w-full h-10 border rounded pl-9 pr-3 text-sm bg-white">
-              <option value="asc">Asc ↑</option>
-              <option value="desc">Desc ↓</option>
-            </select>
-          </div>
+      <!-- Export PDF -->
+      <button id="exportPdfBtn" class="btn-gradient min-w-[120px]">
+        📑 PDF
+      </button>
 
-        </div>
+    </div>
 
-        <!-- Export -->
-        <div class="flex gap-2 w-full lg:w-auto lg:ml-auto">
-          <button id="exportCsvBtn"
-            class="h-10 px-3 rounded border bg-white text-sm text-gray-800
-                   inline-flex items-center gap-2 justify-center
-                   hover:bg-gray-50">
-            <i class="fa-solid fa-file-csv text-green-700"></i>
-            CSV
-          </button>
+    <!-- Table -->
+    <div class="bg-white shadow-md rounded-xl p-6">
+      <div class="overflow-x-auto">
+        <table class="min-w-full border border-gray-400 text-center">
+          <thead class="text-white">
+  <tr class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
+    <th class="border border-gray-300 px-6 py-4 font-bold">Patient ID</th>
+    <th class="border border-gray-300 px-6 py-4 font-bold">Name</th>
+    <th class="border border-gray-300 px-6 py-4 font-bold">Age</th>
+    <th class="border border-gray-300 px-6 py-4 font-bold">Gender</th>
+    <th class="border border-gray-300 px-6 py-4 font-bold">Phone</th>
+    <th class="border border-gray-300 px-6 py-4 font-bold">View</th>
+  </tr>
+</thead>
 
-          <button id="exportPdfBtn"
-            class="h-10 px-3 rounded bg-blue-600 text-white text-sm
-                   inline-flex items-center gap-2 justify-center
-                   hover:bg-blue-700">
-            <i class="fa-solid fa-file-pdf"></i>
-            PDF
-          </button>
-        </div>
-
+          <!-- IMPORTANT: add this ID so JS can render rows -->
+          <tbody id="profilesTableBody">
+            <!-- dynamic rows -->
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
 
-  <!-- List -->
-  <div class="bg-white p-5 rounded shadow">
-    <div id="loadingSpinner" class="text-center py-4">
-      <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500 mx-auto"></div>
-    </div>
+  </section>
 
-    <div id="profilesTableContainer" class="hidden overflow-x-auto">
-      <table class="min-w-full text-left border">
-        <thead class="bg-gray-200">
-          <tr>
-            <th class="px-3 py-2">Patient ID</th>
-            <th class="px-3 py-2">Name</th>
-            <th class="px-3 py-2">Phone</th>
-            <th class="px-3 py-2">Age</th>
-            <th class="px-3 py-2">View</th>
-          </tr>
-        </thead>
-        <tbody id="profilesTableBody"></tbody>
-      </table>
-
-      <p id="noProfiles" class="text-center text-gray-500 mt-3 hidden">
-        No patients found.
-      </p>
-    </div>
-  </div>
-
-  <div id="alertContainer" class="fixed top-4 right-4 space-y-2 z-50"></div>
-</div>
+</body>
+</html>
