@@ -1,4 +1,84 @@
 // ================================
+// UTILITY FUNCTIONS
+// ================================
+
+function escHtml(str) {
+  if (str == null) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function safeCsv(val) {
+  if (val == null) return "";
+  const str = String(val);
+  if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
+function downloadBlob(filename, blob) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function generatePDF(title, htmlContent) {
+  const styles = `
+    <style>
+      body { font-family: Arial, sans-serif; margin: 40px; }
+      h1 { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
+      h2 { color: #1e40af; margin-top: 30px; }
+      .meta { color: #6b7280; font-size: 12px; margin-bottom: 20px; }
+      .kv { margin: 10px 0; }
+      .kv-row { display: flex; padding: 8px; border-bottom: 1px solid #e5e7eb; }
+      .k { font-weight: bold; width: 150px; color: #374151; }
+      .v { color: #1f2937; }
+      table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+      th { background: #f3f4f6; padding: 10px; text-align: left; border: 1px solid #d1d5db; }
+      td { padding: 8px; border: 1px solid #e5e7eb; }
+      .muted { color: #9ca3af; font-style: italic; }
+    </style>
+  `;
+
+  const fullHtml = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <title>${escHtml(title)}</title>
+      ${styles}
+    </head>
+    <body>
+      ${htmlContent}
+    </body>
+    </html>
+  `;
+
+  const blob = new Blob([fullHtml], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const printWindow = window.open(url, "_blank");
+  
+  if (printWindow) {
+    printWindow.onload = function() {
+      setTimeout(() => {
+        printWindow.print();
+        printWindow.close(); 
+      }, 250);
+    };
+  }
+}
+
+// ================================
 // GENERIC PROFILE EXPORT (CLINIC)
 // Works for: Patient, Doctor, Billing
 // ================================
@@ -81,6 +161,10 @@ function buildProfileCSV(entity, entityFields, rows, rowColumns) {
   ].join("\n");
 }
 
+// ================================
+// EXPORTED FUNCTIONS
+// ================================
+
 export function exportToCSV(filename, entity, rows, config) {
   const csv = buildProfileCSV(
     entity,
@@ -102,5 +186,13 @@ export function exportToPDF(title, entity, rows, config) {
     config?.rowColumns || []
   );
 
-  exportToPDF(title, html);
+  generatePDF(title, html);
+}
+
+export function exportProfileToCSV(filename, entity, rows, config) {
+  return exportToCSV(filename, entity, rows, config);
+}
+
+export function exportProfileToPDF(title, entity, rows, config) {
+  return exportToPDF(title, entity, rows, config);
 }

@@ -21,18 +21,34 @@ export function initProfilesController() {
   $("sortBy")?.addEventListener("change", refresh);
   $("sortDir")?.addEventListener("change", refresh);
 
+  // ✅ CSV Export (fixed)
   $("exportCsvBtn")?.addEventListener("click", () => {
-    exportToCSV("patients.csv", getRows(), COLUMNS);
+    const rows = getRows();
+
+    exportToCSV(
+      "patients.csv",
+      { total: rows.length }, // entity summary
+      rows,
+      {
+        entityFields: [{ key: "total", label: "Total Patients" }],
+        rowColumns: COLUMNS,
+      }
+    );
   });
 
+  // ✅ PDF Export (fixed)
   $("exportPdfBtn")?.addEventListener("click", () => {
     const rows = getRows();
-    const html = buildPrintableTableHTML(
+
+    exportToPDF(
       "Patient Directory",
+      { total: rows.length },
       rows,
-      COLUMNS
+      {
+        entityFields: [{ key: "total", label: "Total Patients" }],
+        rowColumns: COLUMNS,
+      }
     );
-    exportToPDF("Patient Directory", html);
   });
 }
 
@@ -43,8 +59,13 @@ async function loadProfiles() {
   if (spinner) spinner.style.display = "block";
   if (container) container.style.display = "none";
 
-  const res = await fetch(API_URL);
-  allPatients = res.ok ? await res.json() : [];
+  try {
+    const res = await fetch(API_URL);
+    allPatients = res.ok ? await res.json() : [];
+  } catch (err) {
+    console.error("Failed to load patients:", err);
+    allPatients = [];
+  }
 
   refresh();
 
@@ -57,11 +78,7 @@ function getRows() {
   const sortKey = $("sortBy")?.value ?? "id";
   const sortDir = $("sortDir")?.value ?? "asc";
 
-  const filtered = filterList(
-    allPatients,
-    q,
-    ["id", "name", "age", "phone"]
-  );
+  const filtered = filterList(allPatients, q, ["id", "name", "age", "phone"]);
 
   return sortList(filtered, sortKey, sortDir);
 }
@@ -113,36 +130,4 @@ function renderProfilesTable(patients) {
 
     body.appendChild(tr);
   });
-}
-
-function buildPrintableTableHTML(title, rows, columns) {
-  const esc = (v) =>
-    String(v ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;");
-
-  return `
-    <h1>${esc(title)}</h1>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr>
-          ${columns.map((c) => `<th>${esc(c.label)}</th>`).join("")}
-        </tr>
-      </thead>
-      <tbody>
-        ${(rows || [])
-          .map(
-            (r) => `
-          <tr>
-            ${columns
-              .map((c) => `<td>${esc(r?.[c.key])}</td>`)
-              .join("")}
-          </tr>
-        `
-          )
-          .join("")}
-      </tbody>
-    </table>
-  `;
 }

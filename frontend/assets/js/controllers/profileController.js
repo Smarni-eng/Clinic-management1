@@ -12,41 +12,57 @@ function setText(id, value) {
   if (el) el.textContent = value ?? "";
 }
 
+// ✅ safe json parser (prevents crash when HTML returned)
+async function safeJson(res) {
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch (e) {
+    console.error("Response is not JSON:", text);
+    throw new Error("Invalid JSON response");
+  }
+}
+
 /* Normalize JOIN rows from clinic-visits report */
 function normalizeVisits(rows) {
   return (rows || []).map((r) => ({
-    appointment_id: r.appointment_id ?? "-",
-    doctor_name: r.doctor_name ?? "-",
-    appointment_date: r.appointment_date ?? "-",
-    visit_reason: r.reason ?? "-",
-    bill_amount: r.bill_amount ?? 0,
+    visit_id: r.appointment_id ?? r.visit_id ?? r.id ?? "-",
+    doctor: r.doctor_name ?? r.doctor ?? "-",
+    specialisation: r.doctor_specialisation ?? r.specialisation ?? r.speciality ?? r.speciality ?? "-",
+    date: r.appointment_date ?? r.date ?? "-",
+    fees: r.bill_amount ?? r.fees ?? 0,
+    status: r.status ?? r.payment_status ?? "-",
     patient_id: r.patient_id,
   }));
 }
 
+
 const PROFILE_EXPORT_CONFIG = {
-  patientFields: [
+  entityFields: [
     { key: "id", label: "Patient ID" },
     { key: "name", label: "Name" },
     { key: "age", label: "Age" },
     { key: "phone", label: "Phone" },
   ],
   rowColumns: [
-    { key: "appointment_id", label: "Appointment ID" },
-    { key: "doctor_name", label: "Doctor" },
-    { key: "appointment_date", label: "Date" },
-    { key: "visit_reason", label: "Reason" },
-    { key: "bill_amount", label: "Bill Amount" },
+    { key: "visit_id", label: "Visit ID" },
+    { key: "doctor", label: "Doctor" },
+    { key: "specialisation", label: "Specialisation" },
+    { key: "date", label: "Date" },
+    { key: "fees", label: "Fees" },
+    { key: "status", label: "Status" },
   ],
 };
+
 
 export async function initProfileController(patientId) {
   let patient = null;
   let visits = [];
 
   // Export buttons
-  $("profileExportCsvBtn")?.addEventListener("click", () => {
+  $("exportCsvBtn")?.addEventListener("click", () => {
     if (!patient) return;
+
     exportToCSV(
       `patient_${patient.id}_profile.csv`,
       patient,
@@ -55,8 +71,9 @@ export async function initProfileController(patientId) {
     );
   });
 
-  $("profileExportPdfBtn")?.addEventListener("click", () => {
+  $("exportPdfBtn")?.addEventListener("click", () => {
     if (!patient) return;
+
     exportToPDF(
       `Patient ${patient.id} - Visit Profile`,
       patient,
@@ -68,14 +85,16 @@ export async function initProfileController(patientId) {
   try {
     show("basicLoading", true);
     show("basicDetails", false);
+
     show("joinLoading", true);
     show("joinTableContainer", false);
     show("noVisits", false);
 
-    /* 1️⃣ Load patient */
+    // 1️⃣ Load patient
     const patientRes = await fetch(`/api/patients/${patientId}`);
     if (!patientRes.ok) throw new Error("Patient not found");
-    patient = await patientRes.json();
+
+    patient = await safeJson(patientRes);
 
     setText("patientId", patient.id);
     setText("patientName", patient.name);
@@ -85,20 +104,19 @@ export async function initProfileController(patientId) {
     show("basicLoading", false);
     show("basicDetails", true);
 
-    /* 2️⃣ Load clinic visit JOIN report */
-    const repRes = await fetch(`/reports/clinic-visits`);
+    // 2️⃣ Load clinic visit JOIN report
+    const repRes = await fetch(`/api/reports/clinic-visits`);
     if (!repRes.ok) throw new Error("Visit report failed");
-    const all = await repRes.json();
+
+    const all = await safeJson(repRes);
 
     visits = normalizeVisits(
-      (all || []).filter(
-        (r) => Number(r.patient_id) === Number(patientId)
-      )
+      (all || []).filter((r) => Number(r.patient_id) === Number(patientId))
     );
 
     setText("totalVisits", visits.length);
 
-    /* 3️⃣ Render table */
+    // 3️⃣ Render table
     const body = $("joinTableBody");
     if (body) body.innerHTML = "";
 
@@ -109,12 +127,14 @@ export async function initProfileController(patientId) {
         const tr = document.createElement("tr");
         tr.className = "border-b";
         tr.innerHTML = `
-          <td class="px-3 py-2">${v.appointment_id}</td>
-          <td class="px-3 py-2">${v.doctor_name}</td>
-          <td class="px-3 py-2">${v.appointment_date}</td>
-          <td class="px-3 py-2">${v.visit_reason}</td>
-          <td class="px-3 py-2">₹${v.bill_amount}</td>
-        `;
+        <td class="px-3 py-2">${v.visit_id}</td>
+        <td class="px-3 py-2">${v.doctor}</td>
+        <td class="px-3 py-2">${v.specialisation}</td>
+        <td class="px-3 py-2">${v.date}</td>
+        <td class="px-3 py-2">₹${v.fees}</td>
+        <td class="px-3 py-2">${v.status}</td>
+    `;
+
         body.appendChild(tr);
       });
     }

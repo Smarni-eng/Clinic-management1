@@ -7,11 +7,14 @@ def get_clinic_visit_report(handler):
     rows = conn.execute("""
         SELECT 
             a.id AS appointment_id,
-            a.appointment_date AS visit_date,
+            a.patient_id,
+            a.appointment_date,
             a.status,
+            '' AS reason,
 
             p.name AS patient_name,
             d.name AS doctor_name,
+            d.specialisation AS doctor_specialisation,
 
             COALESCE(b.amount, 0) AS bill_amount
         FROM appointments a
