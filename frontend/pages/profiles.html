@@ -11,7 +11,22 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: #f5f5f5;
+
+      /* ✅ Relevant clear background image */
+      background-image: url("https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&q=80&w=2000");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+    }
+
+    /* ✅ Glass card (like reports page but not too transparent) */
+    .glass-card {
+      backdrop-filter: blur(18px) brightness(105%);
+      -webkit-backdrop-filter: blur(18px) brightness(105%);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
     }
 
     /* Gradient button style */
@@ -34,61 +49,59 @@
       filter: brightness(1.05);
     }
 
-    /* Normal outline button */
-    .btn-outline {
-      background: white;
-      border: 1px solid #d1d5db;
-      border-radius: 12px;
-      padding: 10px 18px;
-      font-weight: 600;
-      transition: 0.25s ease;
+    /* Inputs / selects for glass */
+    .glass-input {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 14px;
     }
 
-    .btn-outline:hover {
-      background: #f3f4f6;
-      transform: scale(1.02);
+    .glass-input:focus-within,
+    .glass-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
     }
   </style>
 </head>
 
 <body>
 
- 
-
   <!-- Main Section -->
   <section class="max-w-6xl mx-auto px-4 py-14">
 
     <!-- Title + Back button -->
     <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-10">
-      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">
+      <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight drop-shadow-sm">
         Patient Directory
       </h1>
 
       <a href="/" class="btn-gradient px-8 py-3 rounded-full">
-     ← Back to Home
-    </a>
+        ← Back to Home
+      </a>
     </div>
 
-    <!-- Overlay box (controls area) -->
-    <div class="w-full max-w-6xl mx-auto bg-white rounded-xl shadow-md p-5
+    <!-- ✅ Controls area as Glass -->
+    <div class="w-full max-w-6xl mx-auto glass-card rounded-3xl p-6
                 flex flex-wrap items-center justify-center gap-4 mb-10">
 
       <!-- Search -->
-      <div class="flex items-center gap-2 border border-gray-300 rounded-xl px-4 py-2 bg-white">
-        <span class="text-gray-600 text-lg">🔍</span>
+      <div class="flex items-center gap-2 px-4 py-2 glass-input">
+        <span class="text-gray-700 text-lg">🔍</span>
         <input id="searchInput" type="text" placeholder="Search..."
-               class="outline-none w-[200px] text-gray-700" />
+               class="outline-none w-[200px] text-gray-800 bg-transparent placeholder:text-gray-600" />
       </div>
 
       <!-- Sort -->
-      <select id="sortBy" class="border border-gray-300 rounded-xl px-4 py-2 bg-white font-semibold">
+      <select id="sortBy" class="px-4 py-2 font-semibold text-gray-800 glass-input">
         <option value="id">Sort: Patient ID</option>
         <option value="name">Sort: Name</option>
         <option value="age">Sort: Age</option>
       </select>
 
       <!-- Order -->
-      <select id="sortOrder" class="border border-gray-300 rounded-xl px-4 py-2 bg-white font-semibold">
+      <select id="sortOrder" class="px-4 py-2 font-semibold text-gray-800 glass-input">
         <option value="asc">Asc ↑</option>
         <option value="desc">Desc ↓</option>
       </select>
@@ -105,27 +118,30 @@
 
     </div>
 
-    <!-- Table -->
-    <div class="bg-white shadow-md rounded-xl p-6">
-      <div class="overflow-x-auto">
-        <table class="min-w-full border border-gray-400 text-center">
+    <!-- ✅ Table card as Glass -->
+    <div class="glass-card rounded-3xl p-8">
+
+      <!-- Table wrapper -->
+      <div class="overflow-x-auto rounded-2xl border border-white/40 bg-white/85 backdrop-blur-xl shadow-lg">
+        <table class="min-w-full text-sm text-center">
           <thead class="text-white">
-  <tr class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
-    <th class="border border-gray-300 px-6 py-4 font-bold">Patient ID</th>
-    <th class="border border-gray-300 px-6 py-4 font-bold">Name</th>
-    <th class="border border-gray-300 px-6 py-4 font-bold">Age</th>
-    <th class="border border-gray-300 px-6 py-4 font-bold">Gender</th>
-    <th class="border border-gray-300 px-6 py-4 font-bold">Phone</th>
-    <th class="border border-gray-300 px-6 py-4 font-bold">View</th>
-  </tr>
-</thead>
+            <tr class="bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">
+              <th class="border border-white/30 px-6 py-4 font-bold">Patient ID</th>
+              <th class="border border-white/30 px-6 py-4 font-bold">Name</th>
+              <th class="border border-white/30 px-6 py-4 font-bold">Age</th>
+              <th class="border border-white/30 px-6 py-4 font-bold">Gender</th>
+              <th class="border border-white/30 px-6 py-4 font-bold">Phone</th>
+              <th class="border border-white/30 px-6 py-4 font-bold">View</th>
+            </tr>
+          </thead>
 
           <!-- IMPORTANT: add this ID so JS can render rows -->
-          <tbody id="profilesTableBody">
+          <tbody id="profilesTableBody" class="divide-y divide-gray-200 bg-white/80">
             <!-- dynamic rows -->
           </tbody>
         </table>
       </div>
+
     </div>
 
   </section>
