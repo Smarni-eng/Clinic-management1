@@ -6,12 +6,20 @@ def get_clinic_visit_report(handler):
 
     rows = conn.execute("""
         SELECT 
-            a.id AS appointment_id,
+            a.id AS visit_id,
+            a.patient_id,                     -- ✅ MUST ADD THIS
+            a.doctor_id,
+
+            a.appointment_date AS appointment_date,
+            
+            a.status AS status,
+
             p.name AS patient_name,
             d.name AS doctor_name,
-            a.appointment_date AS visit_date,
-            a.status,
-            COALESCE(b.amount, 0) AS bill_amount
+            d.specialisation AS speciality,
+
+            COALESCE(b.amount, 0) AS bill_amount,
+            COALESCE(b.status, 'Pending') AS payment_status
         FROM appointments a
         LEFT JOIN patients p ON p.id = a.patient_id
         LEFT JOIN doctors d ON d.id = a.doctor_id

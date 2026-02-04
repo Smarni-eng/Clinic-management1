@@ -26,11 +26,11 @@ async function safeJson(res) {
 /* Normalize JOIN rows from clinic-visits report */
 function normalizeVisits(rows) {
   return (rows || []).map((r) => ({
-    visit_id: r.appointment_id ?? r.visit_id ?? r.id ?? "-",
-    doctor: r.doctor_name ?? r.doctor ?? "-",
-    specialisation: r.doctor_specialisation ?? r.specialisation ?? r.speciality ?? r.speciality ?? "-",
-    date: r.appointment_date ?? r.date ?? "-",
-    fees: r.bill_amount ?? r.fees ?? 0,
+    visit_id: r.visit_id ?? r.id ?? "-",
+    doctor: r.doctor ?? r.doctor_name ?? "-",
+    speciality: r.speciality ?? r.speciality ?? "-",
+    date: r.date ?? r.appointment_date ?? "-",
+    fees: r.fees ?? r.bill_amount ?? 0,
     status: r.status ?? r.payment_status ?? "-",
     patient_id: r.patient_id,
   }));
@@ -47,7 +47,7 @@ const PROFILE_EXPORT_CONFIG = {
   rowColumns: [
     { key: "visit_id", label: "Visit ID" },
     { key: "doctor", label: "Doctor" },
-    { key: "specialisation", label: "Specialisation" },
+    { key: "speciality", label: "Speciality" },
     { key: "date", label: "Date" },
     { key: "fees", label: "Fees" },
     { key: "status", label: "Status" },
@@ -105,6 +105,7 @@ export async function initProfileController(patientId) {
     show("basicDetails", true);
 
     // 2️⃣ Load clinic visit JOIN report
+    // ✅ IMPORTANT FIX: use /api/reports/clinic-visits
     const repRes = await fetch(`/api/reports/clinic-visits`);
     if (!repRes.ok) throw new Error("Visit report failed");
 
@@ -127,13 +128,13 @@ export async function initProfileController(patientId) {
         const tr = document.createElement("tr");
         tr.className = "border-b";
         tr.innerHTML = `
-        <td class="px-3 py-2">${v.visit_id}</td>
-        <td class="px-3 py-2">${v.doctor}</td>
-        <td class="px-3 py-2">${v.specialisation}</td>
-        <td class="px-3 py-2">${v.date}</td>
-        <td class="px-3 py-2">₹${v.fees}</td>
-        <td class="px-3 py-2">${v.status}</td>
-    `;
+  <td class="px-3 py-2">${v.visit_id}</td>
+  <td class="px-3 py-2">${v.doctor}</td>
+  <td class="px-3 py-2">${v.speciality}</td>
+  <td class="px-3 py-2">${v.date}</td>
+  <td class="px-3 py-2">₹${v.fees}</td>
+  <td class="px-3 py-2">${v.status}</td>
+`;
 
         body.appendChild(tr);
       });
