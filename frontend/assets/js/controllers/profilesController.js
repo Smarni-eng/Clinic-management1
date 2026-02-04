@@ -107,17 +107,18 @@ function renderProfilesTable(patients) {
     tr.className = "border-b";
 
     tr.innerHTML = `
-      <td class="px-3 py-2">${p.id}</td>
+      <td class="px-3 py-2">${p.id ?? "-"}</td>
 
       <td class="px-3 py-2">
         <a href="/profiles/${p.id}" data-link
            class="text-blue-600 hover:underline font-medium">
-          ${p.name}
+          ${p.name ?? "-"}
         </a>
       </td>
 
-      <td class="px-3 py-2">${p.age}</td>
-      <td class="px-3 py-2">${p.phone}</td>
+      <td class="px-3 py-2">${p.age ?? "-"}</td>
+      <td class="px-3 py-2">${p.gender ?? "-"}</td>
+      <td class="px-3 py-2">${p.phone ?? "-"}</td>
 
       <td class="px-3 py-2">
         <a href="/profiles/${p.id}" data-link
