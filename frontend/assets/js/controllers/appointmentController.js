@@ -66,11 +66,11 @@ export async function loadAppointments() {
 export async function createNewAppointment(data) {
   const res = await apiCreate(data);
   if (res.ok) {
-    showAlert("Appointment added!");
+    showAlert("Appointment booked!");
     resetForm();
     loadAppointments();
   } else {
-    showAlert("Failed to add appointment!");
+    showAlert("Failed to book appointment!");
   }
 }
 

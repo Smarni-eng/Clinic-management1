@@ -20,7 +20,7 @@ def init_database():
             phone TEXT,
             email TEXT,
             disease TEXT,
-            doctor TEXT,
+            doctor_id INTEGER,
             created_at TEXT,
             updated_at TEXT
         )
@@ -57,6 +57,7 @@ def init_database():
         CREATE TABLE IF NOT EXISTS billings (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             patient_id INTEGER,
+            appointment_id INTEGER,
             doctor_id INTEGER,
             amount REAL,
             payment_status TEXT,

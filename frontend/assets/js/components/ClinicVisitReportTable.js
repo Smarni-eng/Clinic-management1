@@ -40,7 +40,7 @@ export function renderClinicVisitReportTable(rows) {
       </td>
 
        <td class="px-3 py-2">
-        <a href="/profiles/${r.id ?? ""}" data-link
+        <a href="/profiles" data-link
           class="inline-flex items-center justify-center px-3 py-1 rounded bg-blue-600 text-white hover:bg-blue-700">
           View
         </a>

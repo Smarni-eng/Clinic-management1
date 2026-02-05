@@ -19,7 +19,7 @@ export function initProfilesController() {
 
   $("searchInput")?.addEventListener("input", refresh);
   $("sortBy")?.addEventListener("change", refresh);
-  $("sortDir")?.addEventListener("change", refresh);
+  $("sortOrder")?.addEventListener("change", refresh);
 
   // ✅ CSV Export (fixed)
   $("exportCsvBtn")?.addEventListener("click", () => {
@@ -76,7 +76,7 @@ async function loadProfiles() {
 function getRows() {
   const q = $("searchInput")?.value?.trim() ?? "";
   const sortKey = $("sortBy")?.value ?? "id";
-  const sortDir = $("sortDir")?.value ?? "asc";
+  const sortDir = $("sortOrder")?.value ?? "asc";
 
   const filtered = filterList(allPatients, q, ["id", "name", "age", "phone"]);
 

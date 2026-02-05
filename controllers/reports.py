@@ -6,7 +6,8 @@ def get_clinic_visit_report(handler):
 
     rows = conn.execute("""
         SELECT 
-            a.id AS visit_id,
+            a.id AS appointment_id,
+            a.id AS visit_id,         
             a.patient_id,                     -- ✅ MUST ADD THIS
             a.doctor_id,
 
