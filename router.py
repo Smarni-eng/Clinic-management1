@@ -49,7 +49,6 @@ FRONTEND_ROUTES = {
     "/", "/home",
     "/patients", "/doctors", "/appointments", "/billings",
     "/reports/clinic-visits",
-    "/docs/flow", "/docs",
     "/profiles",
 }
 
